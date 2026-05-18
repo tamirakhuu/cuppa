@@ -499,7 +499,7 @@ input:focus,select:focus{border-color:var(--ca)}
     <div class="sec-header">
       <div>
         <div class="sec-eyebrow">Бүтээгдэхүүний ангилал</div>
-        <h2 class="sec-title">Ямар хэрэгтэй вэ?</h2>
+        <h2 class="sec-title">Таньд юу хэрэгтэй вэ?</h2>
       </div>
       <span class="see-all" onclick="nav('catalog')">Бүгдийг →</span>
     </div>
@@ -1166,7 +1166,7 @@ function renderDrawer(){
   const b=document.getElementById('drawerBody');
   const f=document.getElementById('drawerFoot');
   if(!cart.length){
-    b.innerHTML=`<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--cr);margin-bottom:6px">Сагс хоосон</p><p style="font-size:13px;color:var(--ct3)">Бараа нэмэх хэрэгтэй</p></div>`;
+    b.innerHTML=`<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--cr);margin-bottom:6px">Сагс хоосон</p></div>`;
     f.innerHTML='';return;
   }
   b.innerHTML=cart.map(c=>`<div class="cart-item">
@@ -1414,7 +1414,7 @@ function renderProf(tab){
   const el=document.getElementById('profMain');if(!el)return;
   if(tab==='orders'){
     el.innerHTML=`<div class="sec-eyebrow">Захиалгын түүх</div><h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Захиалгууд</h3>`+
-    [{id:'BM-2024-001',items:['Torani Vanilla Syrup','Ethiopia Yirgacheffe'],total:93500,status:'shipped',date:'2024-12-01'},
+    [{id:'BM-2024-001',items:['Pomona Vanilla Syrup','Ethiopia Yirgacheffe'],total:93500,status:'shipped',date:'2024-12-01'},
      {id:'BM-2024-002',items:['Monin Caramel Sauce 500ml'],total:45000,status:'done',date:'2024-11-20'},
      {id:'BM-2024-003',items:['Masala Chai Blend','Butterfly Pea Flower'],total:40500,status:'pending',date:'2024-12-02'}
     ].map(o=>`<div class="order-item"><div class="oi-top"><div><div class="oi-num">${o.id}</div><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-top:2px">${o.date}</div></div><span class="stat-pill sp-${o.status==='done'?'done':o.status}">${o.status==='shipped'?'ЯВУУЛСАН':o.status==='done'?'ХҮРГЭГДСЭН':'ХҮЛЭЭГДЭЖ БАЙНА'}</span></div><div class="oi-tags">${o.items.map(i=>`<span class="oi-tag">${i}</span>`).join('')}</div><div class="oi-bot"><span style="font-size:12px;color:var(--ct3)">Нийт дүн</span><span style="font-weight:700;font-family:'DM Serif Display',serif;font-size:18px;color:var(--ca)">${fmt(o.total)}</span></div></div>`).join('');
