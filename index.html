@@ -19,6 +19,23 @@
 body{font-family:'DM Sans',sans-serif;background:var(--cb);color:var(--ct);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 
+/* PRODUCT IMAGE */
+.prod-icon-img{width:100%;height:100%;object-fit:cover;border-radius:0;display:block}
+.prod-icon-emoji{font-size:56px;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+@media(min-width:480px){.prod-icon-emoji{font-size:64px}}
+@media(min-width:768px){.prod-icon-emoji{font-size:72px}}
+
+/* Detail page large image */
+.det-main-img{width:100%;height:100%;object-fit:contain;padding:16px;border-radius:var(--bdrl)}
+.det-main-emoji{font-size:100px;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+@media(min-width:768px){.det-main-emoji{font-size:120px}}
+
+/* Thumb images */
+.det-thumb-img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--bdr) - 2px)}
+
+/* Cart drawer images */
+.ci-img-inner{width:100%;height:100%;object-fit:cover;border-radius:var(--bdr)}
+
 /* TOPBAR */
 .topbar{background:var(--cr);color:#fff;text-align:center;padding:8px 20px;font-size:11px;letter-spacing:.5px;font-family:'Space Mono',monospace}
 
@@ -59,6 +76,15 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .page{display:none}
 .page.active{display:block}
 
+/* icon */
+.search-icon{
+  width:16px;
+  height:16px;
+  object-fit:contain;
+  opacity:.7;
+}
+
+
 /* CART DRAWER */
 .cart-backdrop{display:none;position:fixed;inset:0;background:rgba(28,16,8,.55);z-index:200;backdrop-filter:blur(2px)}
 .cart-backdrop.open{display:block}
@@ -71,7 +97,7 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .cart-empty{text-align:center;padding:60px 20px;color:var(--ct3)}
 .cart-empty-icon{font-size:56px;margin-bottom:16px;display:block}
 .cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--cb2)}
-.ci-img{width:62px;height:62px;background:var(--cb2);border-radius:var(--bdr);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.ci-img{width:62px;height:62px;background:var(--cb2);border-radius:var(--bdr);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;overflow:hidden}
 .ci-info{flex:1;min-width:0}
 .ci-name{font-size:13px;font-weight:600;color:var(--ct);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ci-cat{font-size:11px;color:var(--ct3);margin-bottom:5px}
@@ -144,15 +170,15 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 /* PRODUCT CARD */
 .prod-card{background:var(--cw);border-radius:12px;border:1px solid var(--cb3);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
 @media(min-width:768px){.prod-card:hover{transform:translateY(-4px);box-shadow:var(--sh)}}
-.prod-img{height:140px;background:var(--cb2);display:flex;align-items:center;justify-content:center;font-size:56px;position:relative}
-@media(min-width:480px){.prod-img{height:160px;font-size:64px}}
-@media(min-width:768px){.prod-img{height:192px;font-size:72px}}
-.prod-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:.5px;font-family:'Space Mono',monospace}
+.prod-img{height:140px;background:var(--cb2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+@media(min-width:480px){.prod-img{height:160px}}
+@media(min-width:768px){.prod-img{height:192px}}
+.prod-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:5px;font-size:9px;font-weight:700;letter-spacing:.5px;font-family:'Space Mono',monospace;z-index:2}
 .badge-new{background:var(--cr);color:#fff}
 .badge-hot{background:var(--ca);color:#fff}
 .badge-sale{background:#2D6A4F;color:#fff}
 .badge-out{background:var(--cb3);color:var(--ct3)}
-.prod-wish{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+.prod-wish{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;z-index:2}
 .prod-body{padding:12px}
 @media(min-width:480px){.prod-body{padding:14px}}
 .prod-cat{font-size:9px;color:var(--ct3);font-family:'Space Mono',monospace;letter-spacing:.5px;margin-bottom:4px}
@@ -196,10 +222,10 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 @media(min-width:768px){.detail-wrap{padding:40px 24px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}}
 .detail-gallery{margin-bottom:20px}
 @media(min-width:768px){.detail-gallery{margin-bottom:0}}
-.det-main{width:100%;aspect-ratio:1;background:var(--cb2);border-radius:var(--bdrl);display:flex;align-items:center;justify-content:center;font-size:100px;border:1px solid var(--cb3);max-height:340px}
-@media(min-width:768px){.det-main{max-height:none;font-size:120px}}
+.det-main{width:100%;aspect-ratio:1;background:var(--cb2);border-radius:var(--bdrl);display:flex;align-items:center;justify-content:center;border:1px solid var(--cb3);max-height:340px;overflow:hidden}
+@media(min-width:768px){.det-main{max-height:none}}
 .det-thumbs{display:flex;gap:10px;margin-top:12px}
-.det-thumb{width:64px;height:64px;border-radius:var(--bdr);background:var(--cb2);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.det-thumb{width:64px;height:64px;border-radius:var(--bdr);background:var(--cb2);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:2px solid transparent;transition:border-color .2s;overflow:hidden}
 .det-thumb.on,.det-thumb:hover{border-color:var(--ca)}
 .det-cat{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ca);text-transform:uppercase;margin-bottom:10px}
 .det-name{font-size:clamp(22px,5vw,32px);color:var(--cr);margin-bottom:12px;line-height:1.2}
@@ -290,10 +316,8 @@ input:focus,select:focus{border-color:var(--ca)}
 .btn-facebook:active{opacity:.9}
 .auth-footer-link{text-align:center;font-size:13px;color:var(--ct3);margin-top:16px}
 .auth-footer-link a{color:var(--ca);font-weight:500;cursor:pointer;text-decoration:none}
-/* Input error state */
 .input-error{border-color:#e53e3e!important}
 .error-msg{font-size:11px;color:#e53e3e;margin-top:2px;font-family:'Space Mono',monospace}
-/* Success checkmark */
 .auth-success{text-align:center;padding:32px 0}
 .auth-success-icon{font-size:56px;display:block;margin-bottom:16px}
 .auth-success h3{font-family:'DM Serif Display',serif;font-size:24px;color:var(--cr);margin-bottom:8px}
@@ -561,7 +585,6 @@ input:focus,select:focus{border-color:var(--ca)}
 <div class="page" id="page-catalog">
   <div class="breadcrumb"><span class="bc-link" onclick="nav('home')">Нүүр</span> / <span id="bcCat">Бүтээгдэхүүн</span></div>
   <div class="catalog-layout">
-    <!-- Sidebar (desktop only) -->
     <div class="catalog-sidebar">
       <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ct3);margin-bottom:12px">ШҮҮЛТҮҮР</div>
       <div style="margin-bottom:16px">
@@ -587,14 +610,13 @@ input:focus,select:focus{border-color:var(--ca)}
         </select>
       </div>
     </div>
-    <!-- Products -->
     <div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
         <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--cr)" id="catTitle">Бүх бараа</h2>
         <span style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace" id="prodCount"></span>
       </div>
       <div class="catalog-search">
-        <span style="color:var(--ct3);font-size:14px">🔍</span>
+        <img src="icon/search.jpg" class="search-icon">
         <input type="text" placeholder="Бараа хайх..." onkeyup="quickSearch(this.value)">
       </div>
       <div class="cat-pills" id="catalogPills"></div>
@@ -696,7 +718,6 @@ input:focus,select:focus{border-color:var(--ca)}
           <div class="pay-opt" onclick="selPay(this,0)"><span class="pay-opt-icon">🏦</span><div><div style="font-weight:600;font-size:14px">Интернет банк</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">Хаан / Голомт / Хас</div></div></div>
         </div>
       </div>
-      <!-- QPay QR (hidden by default) -->
       <div id="qpayBox" style="display:none" class="co-section">
         <h3><div class="step-num" style="background:var(--ca)">📱</div> QPay QR код</h3>
         <div style="text-align:center;padding:20px">
@@ -709,7 +730,6 @@ input:focus,select:focus{border-color:var(--ca)}
         </div>
       </div>
     </div>
-    <!-- Order summary -->
     <div>
       <div class="order-card">
         <h3>Захиалгын дүн</h3>
@@ -740,9 +760,7 @@ input:focus,select:focus{border-color:var(--ca)}
         </div>
         <p class="auth-sub">COFFEE SUPPLY STORE</p>
       </div>
-      <div id="authContent">
-        <!-- Will be rendered by JS -->
-      </div>
+      <div id="authContent"></div>
     </div>
   </div>
 </div>
@@ -876,25 +894,68 @@ input:focus,select:focus{border-color:var(--ca)}
 </div>
 
 <script>
+// ─────────────────────────────────────────────
+// PRODUCT DATA
+// icon  → зурагны замыг эсвэл emoji-г тодорхойлно
+// img   → images/ фолдерийн PNG файл (байвал зураг харуулна, байхгүй бол icon emoji харуулна)
+// ─────────────────────────────────────────────
 const P=[
-  {id:1,name:'Pomona Vanilla Syrup 1000ml',cat:'Сироп',icon:'🍦',price:28500,old:35000,stock:42,rating:4.9,rv:218,badge:'HOT',desc:'Жинхэнэ ваниль амттай, дэлхий дахинд алдартай Pomona брэнд. Latte, капучино, smoothie-д тохиромжтой.',sizes:['750ml','1L','2L']},
-  {id:2,name:'Torani Strawberry Syrup 1L',cat:'Сироп',icon:'🍓',price:32000,old:null,stock:28,rating:4.8,rv:145,badge:'NEW',desc:'Жимсний гүн амт бүхий гүзээлзгэнэ сироп. Frappuccino, lemonade, milkshake-д яг тохирно.',sizes:['750ml','1L']},
-  {id:3,name:'Monin Caramel Sauce 500ml',cat:'Соус',icon:'🍮',price:45000,old:52000,stock:15,rating:4.9,rv:304,badge:'HOT',desc:'Францын нэртэй Monin брэнд. Caramel macchiato, frappuccino-д хэрэглэнэ.',sizes:['500ml','1L']},
-  {id:4,name:'Monin Chocolate Sauce 500ml',cat:'Соус',icon:'🍫',price:43000,old:50000,stock:20,rating:4.8,rv:276,badge:null,desc:'Monin шоколад сос. Mocha, hot chocolate-д тохиромжтой. Гүн какао амт.',sizes:['500ml','1L']},
-  {id:5,name:'Mango Smooth Base 1L',cat:'Smoothie',icon:'🥭',price:38000,old:null,stock:35,rating:4.7,rv:192,badge:'NEW',desc:'Тропик манго smooth base. Frappe, smoothie, ice blended drink бэлтгэхэд тохиромжтой.',sizes:['1L','2L']},
-  {id:6,name:'Taro Smooth Base 1L',cat:'Smoothie',icon:'🫐',price:36000,old:42000,stock:22,rating:4.6,rv:167,badge:'SALE',desc:'Тайван загварын таро smooth base. Lilac өнгөтэй, сайхан амттай.',sizes:['1L','2L']},
-  {id:7,name:'Ethiopia Yirgacheffe 500g',cat:'Кофе',icon:'☕',price:65000,old:75000,stock:18,rating:4.9,rv:421,badge:'HOT',desc:'Эфиопийн Йиргачеффе. Single origin specialty coffee. Цэцэгсэг, жимсний аромат. Light-medium roast.',sizes:['250g','500g','1kg']},
-  {id:8,name:'Colombia Huila Washed 500g',cat:'Кофе',icon:'🌿',price:58000,old:null,stock:24,rating:4.8,rv:289,badge:'NEW',desc:'Колумбийн Уила мужийн washed process буурцаг. Карамел, хүчлийн сайхан тэнцвэр.',sizes:['250g','500g','1kg']},
-  {id:9,name:'Masala Chai Blend 250g',cat:'Хандалдаг цай',icon:'🍵',price:22000,old:28000,stock:55,rating:4.7,rv:183,badge:'SALE',desc:'Хойд Энэтхэгийн жинхэнэ masala chai. Бадьян, далинч, зандан, кардамон хольцтой.',sizes:['100g','250g','500g']},
-  {id:10,name:'Butterfly Pea Flower 100g',cat:'Хандалдаг цай',icon:'💙',price:18500,old:null,stock:40,rating:4.6,rv:134,badge:'NEW',desc:'Цэнхэр өнгөтэй хандалдаг цэцэг. Хүчлийн нөлөөгөөр өнгө нь хувирдаг.',sizes:['50g','100g','250g']},
-  {id:11,name:'Rhino Portafilter 58mm',cat:'Бариста хэрэгсэл',icon:'⚙️',price:125000,old:145000,stock:8,rating:4.9,rv:97,badge:'HOT',desc:'Австралийн Rhino портафильтр. 58мм, зэвэрдэггүй ган. Эспрессо машинтай нийцнэ.',sizes:['58mm']},
-  {id:12,name:'Espro Calibrated Tamper 58mm',cat:'Бариста хэрэгсэл',icon:'🔨',price:85000,old:null,stock:12,rating:4.8,rv:156,badge:null,desc:'Зохицуулагдах даралтын тэмпер. 10–30 кг даралтын горимтой.',sizes:['58mm']},
-  {id:13,name:'Matcha Powder Premium 100g',cat:'Powder',icon:'🍃',price:32000,old:38000,stock:30,rating:4.7,rv:211,badge:'SALE',desc:'Японы ceremonial grade matcha. Тод ногоон өнгө, гүн амт. Latte, smoothie-д тохиромжтой.',sizes:['100g','250g']},
-  {id:14,name:'Reusable Bubble Tea Straw Set',cat:'Дагалдах хэрэгсэл',icon:'🧉',price:15000,old:null,stock:0,rating:4.5,rv:78,badge:null,desc:'Дахин ашиглах боломжтой металл сорох хоолой. 4 ширхэг + цэвэрлэх хавчаар.',sizes:['4 ширхэг']},
+  {id:1, name:'Pomona Vanilla Syrup 1000ml',      cat:'Сироп',              img:'images/syrup/povanilla.jpg',             icon:'', price:28500, old:35000, stock:42, rating:4.9, rv:218, badge:'HOT',  desc:'Жинхэнэ ваниль амттай, дэлхий дахинд алдартай Pomona брэнд. Latte, капучино, smoothie-д тохиромжтой.',   sizes:['750ml','1L','2L']},
+  {id:2, name:'Pomona Caramel Syrup 1000ml',        cat:'Сироп',              img:'images/syrup/pocaramel.png',           icon:'🍓', price:32000, old:null,  stock:28, rating:4.8, rv:145, badge:'NEW',  desc:'Жимсний гүн амт бүхий гүзээлзгэнэ сироп. Frappuccino, lemonade, milkshake-д яг тохирно.',               sizes:['750ml','1L']},
+  {id:3, name:'Pomona Strawberry Smoothie 2kg',    cat:'Smoothie',               img:'images/smoothie/posberry.png',      icon:'🍓', price:45000, old:52000, stock:15, rating:4.9, rv:304, badge:'HOT',  desc:'Францын нэртэй Monin брэнд. Caramel macchiato, frappuccino-д хэрэглэнэ.',                                sizes:['500ml','1L']},
+  {id:4, name:'Pomona Cocolate Sauce',              cat:'Соус',            img:'images/sauce/pococolate.jpg',             icon:'🍫', price:54500, old:null, stock:20, rating:4.8, rv:276, badge:null,   desc:'Monin шоколад сос. Mocha, hot chocolate-д тохиромжтой. Гүн какао амт.',                                   sizes:['500ml','1L']},
+  {id:5, name:'Pomona Mango Smoothie 2kg',          cat:'Smoothie',           img:'images/smoothie/pomango.png',          icon:'🥭', price:38000, old:null,  stock:35, rating:4.7, rv:192, badge:'NEW',  desc:'Тропик манго smooth base. Frappe, smoothie, ice blended drink бэлтгэхэд тохиромжтой.',                   sizes:['1L','2L']},
+  {id:6, name:'Pomona Citron Smoothie 2kg',         cat:'Smoothie',           img:'images/smoothie/pocitron.png',         icon:'🫐', price:36000, old:42000, stock:22, rating:4.6, rv:167, badge:'SALE', desc:'Тайван загварын таро smooth base. Lilac өнгөтэй, сайхан амттай.',                                          sizes:['1L','2L']},
+  {id:7, name:'Forte Espresso 1kg',                 cat:'Кофе',               img:'images/coffee/espresso.jpg',           icon:'☕', price:90000, old:null, stock:18, rating:4.9, rv:421, badge:'HOT',  desc:'Эфиопийн Йиргачеффе. Single origin specialty coffee. Цэцэгсэг, жимсний аромат. Light-medium roast.',    sizes:['200g','1kg']},
+  {id:8, name:'Forte Premium 1kg',                  cat:'Кофе',               img:'images/coffee/premium.jpg',            icon:'🌿', price:90000, old:null,  stock:24, rating:4.8, rv:289, badge:'NEW',  desc:'Колумбийн Уила мужийн washed process буурцаг. Карамел, хүчлийн сайхан тэнцвэр.',                        sizes:['200g','1kg']},
+  {id:9, name:'Masala Chai Blend 100g',             cat:'Хандалдаг цай',      img:'images/tea/masalachai.jpg',                    icon:'🍵', price:22000, old:28000, stock:55, rating:4.7, rv:183, badge:'SALE', desc:'Хойд Энэтхэгийн жинхэнэ masala chai. Бадьян, далинч, зандан, кардамон хольцтой.',                        sizes:['250g']},
+  {id:10,name:'Mango Flip 100g',                    cat:'Хандалдаг цай',      img:'images/tea/mangoflip.jpg',                    icon:'💙', price:18500, old:null,  stock:40, rating:4.6, rv:134, badge:'NEW',  desc:'Цэнхэр өнгөтэй хандалдаг цэцэг. Хүчлийн нөлөөгөөр өнгө нь хувирдаг.',                                  sizes:['100g']},
+  {id:11,name:'UP Portafilter 58mm',                cat:'Бариста хэрэгсэл',   img:'images/barista/upporta.png',                    icon:'⚙️', price:55000,old:70000,stock:8,  rating:4.9, rv:97,  badge:'HOT',  desc:'Австралийн Rhino портафильтр. 58мм, зэвэрдэггүй ган. Эспрессо машинтай нийцнэ.',                         sizes:['58mm']},
+  {id:12,name:'UP Steam',                           cat:'Бариста хэрэгсэл',   img:'images/barista/steamer.png',                    icon:'🔨', price:85000, old:null,  stock:12, rating:4.8, rv:156, badge:null,   desc:'Зохицуулагдах даралтын тэмпер. 10–30 кг даралтын горимтой.',                                             sizes:['58mm']},
+  {id:13,name:'Pomona Yogurt Powder 1kg',           cat:'Powder',             img:'images/powder/yogurt.jpg',                    icon:'🍃', price:32000, old:38000, stock:30, rating:4.7, rv:211, badge:'SALE', desc:'Японы ceremonial grade matcha. Тод ногоон өнгө, гүн амт. Latte, smoothie-д тохиромжтой.',                 sizes:['100g','250g']},
+  {id:14,name:'Pomona Syrup Pomp',                  cat:'Дагалдах хэрэгсэл',  img:'images/dagaldah/syruppomp.jpg',                    icon:'🧉', price:15000, old:null,  stock:0,  rating:4.5, rv:78,  badge:null,   desc:'Дахин ашиглах боломжтой металл сорох хоолой. 4 ширхэг + цэвэрлэх хавчаар.',                              sizes:['4 ширхэг']},
 ];
 
+// ─────────────────────────────────────────────
+// Helper: бүтээгдэхүүний зургийг HTML болгох
+// ─────────────────────────────────────────────
+function prodImgHtml(p, cls='') {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span style="display:none;font-size:56px;width:100%;height:100%;align-items:center;justify-content:center">${p.icon}</span>`;
+  }
+  return `<span style="font-size:56px">${p.icon}</span>`;
+}
+
+function detailImgHtml(p) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.name}" class="det-main-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="det-main-emoji" style="display:none">${p.icon}</span>`;
+  }
+  return `<span class="det-main-emoji">${p.icon}</span>`;
+}
+
+function thumbImgHtml(p) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.name}" class="det-thumb-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span style="display:none;font-size:26px">${p.icon}</span>`;
+  }
+  return `<span style="font-size:26px">${p.icon}</span>`;
+}
+
+function cartImgHtml(p) {
+  if (p.img) {
+    return `<img src="${p.img}" alt="${p.name}" class="ci-img-inner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span style="display:none;font-size:28px">${p.icon}</span>`;
+  }
+  return `<span style="font-size:28px">${p.icon}</span>`;
+}
+
+// ─────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────
 let cart=[],wish=[],curProd=null,curCat='all',starCount=5;
-let currentUser=null; // null = not logged in
+let currentUser=null;
 let shipFee=5000,discountAmt=0;
 
 function fmt(n){return '₮'+Math.round(n).toLocaleString()}
@@ -913,7 +974,6 @@ function nav(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  // Update bottom nav
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
   const bnMap={home:'bn-home',catalog:'bn-catalog',wish:'bn-wish',auth:'bn-auth'};
   if(bnMap[page]){document.getElementById(bnMap[page]).classList.add('active')}
@@ -930,6 +990,9 @@ function filterCat(cat){curCat=cat;nav('catalog')}
 function openMM(){document.getElementById('mobileMenu').classList.add('open')}
 function closeMM(){document.getElementById('mobileMenu').classList.remove('open')}
 
+// ─────────────────────────────────────────────
+// Product card — зурагтай
+// ─────────────────────────────────────────────
 function pCard(p){
   const w=wish.includes(p.id);
   const disc=p.old?Math.round((1-p.price/p.old)*100):0;
@@ -937,7 +1000,12 @@ function pCard(p){
     <div class="prod-img">
       ${p.badge?`<div class="prod-badge badge-${p.badge.toLowerCase()}">${p.badge}</div>`:''}
       <button class="prod-wish${w?' on':''}" onclick="event.stopPropagation();toggleWish(${p.id},this)">${w?'❤️':'🤍'}</button>
-      ${p.icon}
+      ${p.img
+        ? `<img src="${p.img}" alt="${p.name}" class="prod-icon-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+           ><span class="prod-icon-emoji" style="display:none">${p.icon}</span>`
+        : `<span class="prod-icon-emoji">${p.icon}</span>`
+      }
     </div>
     <div class="prod-body">
       <div class="prod-cat">${p.cat}</div>
@@ -946,9 +1014,9 @@ function pCard(p){
         <span class="prod-price">${fmt(p.price)}</span>
         ${p.old?`<span class="prod-old">${fmt(p.old)}</span><span class="prod-disc">-${disc}%</span>`:''}
       </div>
-      <div class="prod-rating"><span class="stars">${'★'.repeat(Math.round(p.rating))}</span><span>${p.rating}</span><span>(${p.rv})</span>${p.stock===0?'<span style="margin-left:auto;color:#9B2226;font-size:9px;font-family:\'Space Mono\',monospace">ДУУСЧЛАА</span>':''}</div>
+      <div class="prod-rating"><span class="stars">${'★'.repeat(Math.round(p.rating))}</span><span>${p.rating}</span><span>(${p.rv})</span>${p.stock===0?'<span style="margin-left:auto;color:#9B2226;font-size:9px;font-family:\'Space Mono\',monospace">ДУУССАН</span>':''}</div>
       <button class="prod-btn" onclick="event.stopPropagation();addCart(${p.id})" ${p.stock===0?'disabled':''}>
-        ${p.stock===0?'Дуусчлаа':'+ Сагсанд нэмэх'}
+        ${p.stock===0?'Дууссан':'+ Сагсанд нэмэх'}
       </button>
     </div>
   </div>`;
@@ -999,13 +1067,34 @@ function quickSearch(q){
 
 function doSearch(){const q=document.getElementById('searchQ').value.trim();if(q){curCat='all';nav('catalog');setTimeout(()=>quickSearch(q),50)}}
 
+// ─────────────────────────────────────────────
+// Product detail — зурагтай
+// ─────────────────────────────────────────────
 function openProd(id){
   const p=P.find(x=>x.id===id);if(!p)return;
   curProd=p;
   document.getElementById('detBc').textContent=p.name;
   document.getElementById('detCat').textContent=p.cat;
   document.getElementById('detName').textContent=p.name;
-  document.getElementById('detMain').textContent=p.icon;
+
+  // Main image
+  const mainEl=document.getElementById('detMain');
+  mainEl.innerHTML=p.img
+    ? `<img src="${p.img}" alt="${p.name}" class="det-main-img"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+       <span class="det-main-emoji" style="display:none">${p.icon}</span>`
+    : `<span class="det-main-emoji">${p.icon}</span>`;
+
+  // Thumbnails
+  document.getElementById('detThumbs').innerHTML=[0,1,2].map((i)=>`
+    <div class="det-thumb${i===0?' on':''}">${
+      p.img
+        ? `<img src="${p.img}" alt="${p.name}" class="det-thumb-img"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <span style="display:none;font-size:26px">${p.icon}</span>`
+        : `<span style="font-size:26px">${p.icon}</span>`
+    }</div>`).join('');
+
   const disc=p.old?Math.round((1-p.price/p.old)*100):0;
   document.getElementById('detPrice').textContent=fmt(p.price);
   document.getElementById('detOld').textContent=p.old?fmt(p.old):'';
@@ -1013,7 +1102,7 @@ function openProd(id){
   ds.textContent=p.old?`-${disc}%`:'';
   ds.style.display=p.old?'inline':'none';
   const s=document.getElementById('detStock');
-  s.innerHTML=p.stock===0?'<span class="stock-out">❌ Дуусчлаа</span>':p.stock<10?`<span class="stock-low">⚠️ Нөөц бага (${p.stock} үлдсэн)</span>`:`<span class="stock-ok">✅ Байна (${p.stock})</span>`;
+  s.innerHTML=p.stock===0?'<span class="stock-out">❌ Дууссан</span>':p.stock<10?`<span class="stock-low">⚠️ Нөөц бага (${p.stock} үлдсэн)</span>`:`<span class="stock-ok">✅ Байна (${p.stock})</span>`;
   document.getElementById('detStars').innerHTML=`<span class="stars">${'★'.repeat(Math.round(p.rating))}</span><span style="font-size:14px;font-weight:600;color:var(--ct);margin-left:4px">${p.rating}</span><span style="font-size:12px;color:var(--ct3)">&nbsp;(${p.rv} сэтгэгдэл)</span>`;
   document.getElementById('detDesc').textContent=p.desc;
   const vv=document.getElementById('detVariants');
@@ -1021,9 +1110,8 @@ function openProd(id){
   const btn=document.getElementById('detAddBtn');
   btn.disabled=p.stock===0;
   btn.style.background=p.stock===0?'var(--cb3)':'var(--cr)';
-  btn.textContent=p.stock===0?'Дуусчлаа':'🛒 Сагсанд нэмэх';
+  btn.textContent=p.stock===0?'Дууссан':'🛒 Сагсанд нэмэх';
   document.getElementById('detWish').textContent=wish.includes(p.id)?'❤️':'🤍';
-  document.getElementById('detThumbs').innerHTML=[p.icon,p.icon,p.icon].map((ic,i)=>`<div class="det-thumb${i===0?' on':''}">${ic}</div>`).join('');
   document.getElementById('reviewList').innerHTML=[
     {n:'Ганболд Б.',r:5,t:'Frappe-д хийхэд гайхалтай!'},
     {n:'Уянга Д.',r:5,t:'Хурдан хүргэж өгсөн, бараа 100% чанартай.'},
@@ -1041,7 +1129,7 @@ function toggleWishDetail(){
 }
 
 function addCart(id){
-  const p=P.find(x=>x.id===id);if(!p||p.stock===0){toast('Дуусчлаа!','err');return}
+  const p=P.find(x=>x.id===id);if(!p||p.stock===0){toast('Дууссан!','err');return}
   const ex=cart.find(x=>x.id===id);
   if(ex)ex.qty=Math.min(ex.qty+1,p.stock);
   else cart.push({...p,qty:1});
@@ -1061,6 +1149,9 @@ function toggleWish(id,btn){
   else{wish.push(id);if(btn){btn.textContent='❤️';btn.classList.add('on')}toast('❤️ Таалагдсанд нэмлээ!','success')}
 }
 
+// ─────────────────────────────────────────────
+// Cart drawer — зурагтай
+// ─────────────────────────────────────────────
 function openCart(){
   document.getElementById('cartBd').classList.add('open');
   document.getElementById('cartDrawer').classList.add('open');
@@ -1078,7 +1169,26 @@ function renderDrawer(){
     b.innerHTML=`<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--cr);margin-bottom:6px">Сагс хоосон</p><p style="font-size:13px;color:var(--ct3)">Бараа нэмэх хэрэгтэй</p></div>`;
     f.innerHTML='';return;
   }
-  b.innerHTML=cart.map(c=>`<div class="cart-item"><div class="ci-img">${c.icon}</div><div class="ci-info"><div class="ci-name">${c.name}</div><div class="ci-cat">${c.cat}</div><div class="ci-price">${fmt(c.price*c.qty)}</div><div class="ci-qty"><button class="qty-btn" onclick="chgQty(${c.id},-1)">−</button><span class="qty-num">${c.qty}</span><button class="qty-btn" onclick="chgQty(${c.id},1)">+</button></div></div><button class="ci-remove" onclick="remCart(${c.id})">✕</button></div>`).join('');
+  b.innerHTML=cart.map(c=>`<div class="cart-item">
+    <div class="ci-img">${
+      c.img
+        ? `<img src="${c.img}" alt="${c.name}" class="ci-img-inner"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <span style="display:none;font-size:28px">${c.icon}</span>`
+        : `<span style="font-size:28px">${c.icon}</span>`
+    }</div>
+    <div class="ci-info">
+      <div class="ci-name">${c.name}</div>
+      <div class="ci-cat">${c.cat}</div>
+      <div class="ci-price">${fmt(c.price*c.qty)}</div>
+      <div class="ci-qty">
+        <button class="qty-btn" onclick="chgQty(${c.id},-1)">−</button>
+        <span class="qty-num">${c.qty}</span>
+        <button class="qty-btn" onclick="chgQty(${c.id},1)">+</button>
+      </div>
+    </div>
+    <button class="ci-remove" onclick="remCart(${c.id})">✕</button>
+  </div>`).join('');
   const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
   f.innerHTML=`<div class="price-row"><span>Дэд дүн</span><span>${fmt(sub)}</span></div><div class="price-row"><span>Хүргэлт</span><span>₮5,000</span></div><div class="price-row total"><span>Нийт</span><span>${fmt(sub+5000)}</span></div><button class="btn-checkout" onclick="closeCart();nav('checkout')">Захиалга хийх →</button>`;
 }
@@ -1143,7 +1253,6 @@ function validateCheckout(){
     {id:'coAddr',label:'Хаяг'},
   ];
   let valid=true;
-  // Clear previous errors
   document.querySelectorAll('.input-error').forEach(el=>el.classList.remove('input-error'));
   document.querySelectorAll('.error-msg').forEach(el=>el.remove());
   for(const f of fields){
@@ -1179,7 +1288,9 @@ function renderWish(){
   else{g.style.display='grid';e.style.display='none';g.innerHTML=wps.map(pCard).join('')}
 }
 
-// ============ AUTH ============
+// ─────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────
 function renderAuth(mode){
   const el=document.getElementById('authContent');
   if(currentUser){
@@ -1254,7 +1365,6 @@ function doLogin(){
   if(!email||!email.includes('@')){setFieldError('loginEmail','Зөв и-мэйл оруулна уу');ok=false}
   if(!pass||pass.length<4){setFieldError('loginPass','Нууц үг оруулна уу');ok=false}
   if(!ok)return;
-  // Simulate login
   setTimeout(()=>{
     currentUser={name:'Батбаяр Лхагва',email:email};
     toast('☕ Амжилттай нэвтэрлээ! Тавтай морилно уу!','success');
@@ -1299,7 +1409,6 @@ function logout(){
   renderAuth('login');
   toast('Амжилттай гарлаа','success');
 }
-// ============ END AUTH ============
 
 function renderProf(tab){
   const el=document.getElementById('profMain');if(!el)return;
