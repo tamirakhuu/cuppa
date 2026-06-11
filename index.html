@@ -19,21 +19,14 @@
 body{font-family:'DM Sans',sans-serif;background:var(--cb);color:var(--ct);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 
-/* PRODUCT IMAGE */
 .prod-icon-img{width:100%;height:100%;object-fit:cover;border-radius:0;display:block}
 .prod-icon-emoji{font-size:56px;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
 @media(min-width:480px){.prod-icon-emoji{font-size:64px}}
 @media(min-width:768px){.prod-icon-emoji{font-size:72px}}
-
-/* Detail page large image */
 .det-main-img{width:100%;height:100%;object-fit:contain;padding:16px;border-radius:var(--bdrl)}
 .det-main-emoji{font-size:100px;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
 @media(min-width:768px){.det-main-emoji{font-size:120px}}
-
-/* Thumb images */
 .det-thumb-img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--bdr) - 2px)}
-
-/* Cart drawer images */
 .ci-img-inner{width:100%;height:100%;object-fit:cover;border-radius:var(--bdr)}
 
 /* TOPBAR */
@@ -76,15 +69,6 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .page{display:none}
 .page.active{display:block}
 
-/* icon */
-.search-icon{
-  width:16px;
-  height:16px;
-  object-fit:contain;
-  opacity:.7;
-}
-
-
 /* CART DRAWER */
 .cart-backdrop{display:none;position:fixed;inset:0;background:rgba(28,16,8,.55);z-index:200;backdrop-filter:blur(2px)}
 .cart-backdrop.open{display:block}
@@ -115,7 +99,7 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .btn-checkout:hover{background:var(--crl)}
 .btn-checkout:active{transform:scale(.98)}
 
-/* BOTTOM NAV (mobile) */
+/* BOTTOM NAV */
 .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--cw);border-top:1px solid var(--cb3);z-index:99;padding:8px 0 max(8px, env(safe-area-inset-bottom))}
 .bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;position:relative}
 .bn-icon{font-size:20px;line-height:1}
@@ -124,10 +108,8 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .bn-badge{position:absolute;top:0;right:calc(50% - 16px);background:var(--ca);color:#fff;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
 @media(min-width:768px){.bottom-nav{display:none}}
 
-/* Page padding for bottom nav */
 @media(max-width:767px){
   .page{padding-bottom:72px}
-  body{padding-bottom:0}
 }
 
 /* HERO */
@@ -195,6 +177,13 @@ h1,h2,h3,h4{font-family:'DM Serif Display',serif}
 .prod-btn:active{transform:scale(.97)}
 .prod-btn:disabled{background:var(--cb3);color:var(--ct3);cursor:not-allowed}
 @media(min-width:768px){.prod-btn:hover{background:var(--cr);color:#fff}}
+
+/* LOADING STATE */
+.loading-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(min-width:768px){.loading-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1024px){.loading-grid{grid-template-columns:repeat(4,1fr)}}
+.skeleton{background:linear-gradient(90deg,var(--cb2) 25%,var(--cb3) 50%,var(--cb2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:12px;height:280px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* CATEGORY GRID */
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -313,7 +302,6 @@ input:focus,select:focus{border-color:var(--ca)}
 .auth-divider{display:flex;align-items:center;gap:12px;margin:6px 0;color:var(--ct3);font-size:13px}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--cb3)}
 .btn-facebook{width:100%;background:#1877F2;color:#fff;border:none;padding:13px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-facebook:active{opacity:.9}
 .auth-footer-link{text-align:center;font-size:13px;color:var(--ct3);margin-top:16px}
 .auth-footer-link a{color:var(--ca);font-weight:500;cursor:pointer;text-decoration:none}
 .input-error{border-color:#e53e3e!important}
@@ -321,7 +309,11 @@ input:focus,select:focus{border-color:var(--ca)}
 .auth-success{text-align:center;padding:32px 0}
 .auth-success-icon{font-size:56px;display:block;margin-bottom:16px}
 .auth-success h3{font-family:'DM Serif Display',serif;font-size:24px;color:var(--cr);margin-bottom:8px}
-.auth-success p{color:var(--ct2);font-size:14px}
+
+/* LOADING SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-loading{opacity:.8;cursor:not-allowed;pointer-events:none}
 
 /* PROFILE */
 .profile-wrap{max-width:1000px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px}
@@ -329,7 +321,7 @@ input:focus,select:focus{border-color:var(--ca)}
 .profile-side{background:var(--cw);border:1px solid var(--cb3);border-radius:var(--bdrl);padding:22px}
 .prof-ava{width:64px;height:64px;border-radius:50%;background:var(--cr);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:26px;margin:0 auto 10px}
 .prof-name{text-align:center;font-weight:600;font-size:16px;color:var(--ct);margin-bottom:3px}
-.prof-email{text-align:center;font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:16px}
+.prof-email{text-align:center;font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:16px;word-break:break-all}
 .prof-menu{border-top:1px solid var(--cb3);padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:4px}
 @media(min-width:768px){.prof-menu{grid-template-columns:1fr}}
 .prof-item{padding:10px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--ct2);transition:all .2s;display:flex;align-items:center;gap:8px;border:none;background:transparent;text-align:left;width:100%;font-family:'DM Sans',sans-serif}
@@ -391,7 +383,7 @@ input:focus,select:focus{border-color:var(--ca)}
 .empty-state{text-align:center;padding:60px 20px;color:var(--ct3)}
 .empty-icon{font-size:56px;margin-bottom:16px;display:block;opacity:.5}
 
-/* CATALOG layout */
+/* CATALOG */
 .catalog-layout{max-width:1200px;margin:0 auto;padding:20px 16px}
 @media(min-width:768px){.catalog-layout{padding:28px 24px;display:grid;grid-template-columns:200px 1fr;gap:24px}}
 .catalog-sidebar{background:var(--cw);border:1px solid var(--cb3);border-radius:var(--bdrl);padding:18px;display:none}
@@ -444,7 +436,7 @@ input:focus,select:focus{border-color:var(--ca)}
     <button class="mm-link" onclick="closeMM();nav('wish')">🤍 <span>Таалагдсан</span></button>
     <button class="mm-link" onclick="closeMM();nav('tracking')">📦 <span>Захиалга хянах</span></button>
     <button class="mm-link" onclick="closeMM();nav('contact')">📍 <span>Холбоо барих</span></button>
-    <button class="mm-link" onclick="closeMM();nav('auth')">👤 <span>Нэвтрэх / Бүртгүүлэх</span></button>
+    <button class="mm-link" id="mmAuthBtn" onclick="closeMM();handleAuthNav()">👤 <span>Нэвтрэх / Бүртгүүлэх</span></button>
   </div>
 </div>
 
@@ -463,7 +455,7 @@ input:focus,select:focus{border-color:var(--ca)}
       <button class="nav-link" onclick="nav('home')">Нүүр</button>
       <button class="nav-link" onclick="nav('catalog')">Бүтээгдэхүүн</button>
       <button class="nav-link" onclick="nav('contact')">Холбогдох</button>
-      <button class="nav-link" onclick="nav('auth')">Нэвтрэх</button>
+      <button class="nav-link" id="navAuthBtn" onclick="handleAuthNav()">Нэвтрэх</button>
     </div>
     <button class="nav-btn" onclick="openCart()">
       🛒
@@ -524,7 +516,12 @@ input:focus,select:focus{border-color:var(--ca)}
         </div>
         <span class="see-all" onclick="nav('catalog')">Бүгдийг →</span>
       </div>
-      <div class="product-grid" id="homeFeatured"></div>
+      <div id="homeFeatured">
+        <div class="loading-grid">
+          <div class="skeleton"></div><div class="skeleton"></div>
+          <div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -547,7 +544,12 @@ input:focus,select:focus{border-color:var(--ca)}
         <h2 class="sec-title">Шинэ бараанууд</h2>
       </div>
     </div>
-    <div class="product-grid" id="homeNew"></div>
+    <div id="homeNew">
+      <div class="loading-grid">
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+      </div>
+    </div>
   </div>
 
   <div class="footer">
@@ -567,7 +569,7 @@ input:focus,select:focus{border-color:var(--ca)}
         <div class="footer-title">Холбоос</div>
         <span class="footer-link" onclick="nav('contact')">Холбоо барих</span>
         <span class="footer-link" onclick="nav('tracking')">Захиалга хянах</span>
-        <span class="footer-link" onclick="nav('auth')">Нэвтрэх</span>
+        <span class="footer-link" onclick="handleAuthNav()">Нэвтрэх</span>
       </div>
       <div style="grid-column:1/-1">
         <div class="footer-title">Холбоо барих</div>
@@ -616,7 +618,7 @@ input:focus,select:focus{border-color:var(--ca)}
         <span style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace" id="prodCount"></span>
       </div>
       <div class="catalog-search">
-        <img src="icon/search.jpg" class="search-icon">
+        <span style="color:var(--ct3);font-size:14px">🔍</span>
         <input type="text" placeholder="Бараа хайх..." onkeyup="quickSearch(this.value)">
       </div>
       <div class="cat-pills" id="catalogPills"></div>
@@ -713,20 +715,20 @@ input:focus,select:focus{border-color:var(--ca)}
       <div class="co-section">
         <h3><div class="step-num">3</div> Төлбөрийн хэлбэр</h3>
         <div class="pay-opts">
-          <div class="pay-opt on" onclick="selPay(this,5000)"><span class="pay-opt-icon">💳</span><div><div style="font-weight:600;font-size:14px">Карт (Visa / Mastercard)</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">Онлайн картаар</div></div></div>
-          <div class="pay-opt" onclick="selPay(this,0)"><span class="pay-opt-icon">📱</span><div><div style="font-weight:600;font-size:14px">QPay</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">QR кодоор</div></div></div>
-          <div class="pay-opt" onclick="selPay(this,0)"><span class="pay-opt-icon">🏦</span><div><div style="font-weight:600;font-size:14px">Интернет банк</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">Хаан / Голомт / Хас</div></div></div>
+          <div class="pay-opt on" onclick="selPay(this)"><span class="pay-opt-icon">💳</span><div><div style="font-weight:600;font-size:14px">Карт (Visa / Mastercard)</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">Онлайн картаар</div></div></div>
+          <div class="pay-opt" onclick="selPay(this)"><span class="pay-opt-icon">📱</span><div><div style="font-weight:600;font-size:14px">QPay</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">QR кодоор</div></div></div>
+          <div class="pay-opt" onclick="selPay(this)"><span class="pay-opt-icon">🏦</span><div><div style="font-weight:600;font-size:14px">Интернет банк</div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">Хаан / Голомт / Хас</div></div></div>
         </div>
       </div>
       <div id="qpayBox" style="display:none" class="co-section">
-        <h3><div class="step-num" style="background:var(--ca)">📱</div> QPay QR код</h3>
+        <h3><div class="step-num" style="background:var(--ca)">📱</div> QR код</h3>
         <div style="text-align:center;padding:20px">
           <div style="width:180px;height:180px;background:var(--cb2);border:2px solid var(--cb3);border-radius:12px;margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
             <div style="font-size:48px">📲</div>
             <div style="font-size:10px;font-family:'Space Mono',monospace;color:var(--ct3)">QR СИМУЛЯЦ</div>
           </div>
-          <div style="font-size:13px;color:var(--ct2);font-family:'Space Mono',monospace">Дансны дугаар: <strong style="color:var(--ct)">1234 5678</strong></div>
-          <div style="font-size:13px;color:var(--ct2);margin-top:6px">Хүлээн авагч: <strong>Coffee Tree LLC</strong></div>
+          <div style="font-size:13px;color:var(--ct2);font-family:'Space Mono',monospace">Хаан Банк: <strong style="color:var(--ct)">5018760137</strong></div>
+          <div style="font-size:13px;color:var(--ct2);margin-top:6px">Хүлээн авагч: <strong>Ариунболор Тамир</strong></div>
         </div>
       </div>
     </div>
@@ -770,16 +772,16 @@ input:focus,select:focus{border-color:var(--ca)}
   <div class="breadcrumb"><span class="bc-link" onclick="nav('home')">Нүүр</span> / Миний профайл</div>
   <div class="profile-wrap">
     <div class="profile-side">
-      <div class="prof-ava">Б</div>
-      <div class="prof-name">Батбаяр Лхагва</div>
-      <div class="prof-email">batbayar@cuppa.mn</div>
+      <div class="prof-ava" id="profAva">U</div>
+      <div class="prof-name" id="profName">–</div>
+      <div class="prof-email" id="profEmailEl">–</div>
       <div class="prof-menu">
         <button class="prof-item on" onclick="switchProf('orders',this)">📦 Захиалгууд</button>
         <button class="prof-item" onclick="switchProf('wish',this)">🤍 Таалагдсан</button>
         <button class="prof-item" onclick="switchProf('addr',this)">📍 Хаяг</button>
         <button class="prof-item" onclick="switchProf('settings',this)">⚙️ Тохиргоо</button>
         <button class="prof-item" onclick="nav('tracking')">🔍 Хянах</button>
-        <button class="prof-item" style="color:#9B2226" onclick="toast('Гарлаа!','success')">🚪 Гарах</button>
+        <button class="prof-item" style="color:#9B2226" onclick="doLogout()">🚪 Гарах</button>
       </div>
     </div>
     <div class="profile-main" id="profMain"></div>
@@ -842,7 +844,7 @@ input:focus,select:focus{border-color:var(--ca)}
         <div class="sec-eyebrow">Бидэнтэй холбогдох</div>
         <h2 style="font-family:'DM Serif Display',serif;font-size:24px;color:var(--cr);margin-bottom:20px">Холбоо барих</h2>
         <div class="c-item"><div class="c-icon">📞</div><div><div class="c-lbl">УТАС</div><div class="c-val">+976 77111772</div></div></div>
-        <div class="c-item"><div class="c-icon">📧</div><div><div class="c-lbl">И-МЭЙЛ</div><div class="c-val">coffeetree2017@gmail.com</div></div></div>
+        <div class="c-item"><div class="c-icon">📧</div><div><div class="c-lbl">И-МЭЙЛ</div><div class="c-val">coffeetree@gmail.com</div></div></div>
         <div class="c-item"><div class="c-icon">📍</div><div><div class="c-lbl">ХАЯГ</div><div class="c-val">Нарны зам, Саруул маркет, 2 давхар, СБД-1</div></div></div>
         <div class="c-item"><div class="c-icon">⏰</div><div><div class="c-lbl">АЖЛЫН ЦАГ</div><div class="c-val">Да–Ня: 09:00–19:00</div></div></div>
         <div class="map-box">
@@ -868,7 +870,7 @@ input:focus,select:focus{border-color:var(--ca)}
   </div>
 </div>
 
-<!-- BOTTOM NAV (mobile) -->
+<!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <div class="bn-item" onclick="nav('home')" id="bn-home">
     <span class="bn-icon">🏠</span>
@@ -881,129 +883,372 @@ input:focus,select:focus{border-color:var(--ca)}
   <div class="bn-item" onclick="openCart()" id="bn-cart">
     <span class="bn-icon">🛒</span>
     <span class="bn-label">Сагс</span>
-    <span class="bn-badge" id="bnBadge">0</span>
+    <span class="bn-badge" id="bnBadge" style="display:none">0</span>
   </div>
   <div class="bn-item" onclick="nav('wish')" id="bn-wish">
     <span class="bn-icon">🤍</span>
     <span class="bn-label">Таалагдсан</span>
   </div>
-  <div class="bn-item" onclick="nav('auth')" id="bn-auth">
+  <div class="bn-item" onclick="handleAuthNav()" id="bn-auth">
     <span class="bn-icon">👤</span>
     <span class="bn-label">Нэвтрэх</span>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ─────────────────────────────────────────────
-// PRODUCT DATA
-// icon  → зурагны замыг эсвэл emoji-г тодорхойлно
-// img   → images/ фолдерийн PNG файл (байвал зураг харуулна, байхгүй бол icon emoji харуулна)
+// SUPABASE CONFIG
 // ─────────────────────────────────────────────
-const P=[
-  {id:1, name:'Pomona Vanilla Syrup 1000ml',      cat:'Сироп',              img:'images/syrup/povanilla.jpg',             icon:'', price:28500, old:35000, stock:42, rating:4.9, rv:218, badge:'HOT',  desc:'Жинхэнэ ваниль амттай, дэлхий дахинд алдартай Pomona брэнд. Latte, капучино, smoothie-д тохиромжтой.',   sizes:['750ml','1L','2L']},
-  {id:2, name:'Pomona Caramel Syrup 1000ml',        cat:'Сироп',              img:'images/syrup/pocaramel.png',           icon:'🍓', price:32000, old:null,  stock:28, rating:4.8, rv:145, badge:'NEW',  desc:'Жимсний гүн амт бүхий гүзээлзгэнэ сироп. Frappuccino, lemonade, milkshake-д яг тохирно.',               sizes:['750ml','1L']},
-  {id:3, name:'Pomona Strawberry Smoothie 2kg',    cat:'Smoothie',               img:'images/smoothie/posberry.png',      icon:'🍓', price:45000, old:52000, stock:15, rating:4.9, rv:304, badge:'HOT',  desc:'Францын нэртэй Monin брэнд. Caramel macchiato, frappuccino-д хэрэглэнэ.',                                sizes:['500ml','1L']},
-  {id:4, name:'Pomona Cocolate Sauce',              cat:'Соус',            img:'images/sauce/pococolate.jpg',             icon:'🍫', price:54500, old:null, stock:20, rating:4.8, rv:276, badge:null,   desc:'Monin шоколад сос. Mocha, hot chocolate-д тохиромжтой. Гүн какао амт.',                                   sizes:['500ml','1L']},
-  {id:5, name:'Pomona Mango Smoothie 2kg',          cat:'Smoothie',           img:'images/smoothie/pomango.png',          icon:'🥭', price:38000, old:null,  stock:35, rating:4.7, rv:192, badge:'NEW',  desc:'Тропик манго smooth base. Frappe, smoothie, ice blended drink бэлтгэхэд тохиромжтой.',                   sizes:['1L','2L']},
-  {id:6, name:'Pomona Citron Smoothie 2kg',         cat:'Smoothie',           img:'images/smoothie/pocitron.png',         icon:'🫐', price:36000, old:42000, stock:22, rating:4.6, rv:167, badge:'SALE', desc:'Тайван загварын таро smooth base. Lilac өнгөтэй, сайхан амттай.',                                          sizes:['1L','2L']},
-  {id:7, name:'Forte Espresso 1kg',                 cat:'Кофе',               img:'images/coffee/espresso.jpg',           icon:'☕', price:90000, old:null, stock:18, rating:4.9, rv:421, badge:'HOT',  desc:'Эфиопийн Йиргачеффе. Single origin specialty coffee. Цэцэгсэг, жимсний аромат. Light-medium roast.',    sizes:['200g','1kg']},
-  {id:8, name:'Forte Premium 1kg',                  cat:'Кофе',               img:'images/coffee/premium.jpg',            icon:'🌿', price:90000, old:null,  stock:24, rating:4.8, rv:289, badge:'NEW',  desc:'Колумбийн Уила мужийн washed process буурцаг. Карамел, хүчлийн сайхан тэнцвэр.',                        sizes:['200g','1kg']},
-  {id:9, name:'Masala Chai Blend 100g',             cat:'Хандалдаг цай',      img:'images/tea/masalachai.jpg',                    icon:'🍵', price:22000, old:28000, stock:55, rating:4.7, rv:183, badge:'SALE', desc:'Хойд Энэтхэгийн жинхэнэ masala chai. Бадьян, далинч, зандан, кардамон хольцтой.',                        sizes:['250g']},
-  {id:10,name:'Mango Flip 100g',                    cat:'Хандалдаг цай',      img:'images/tea/mangoflip.jpg',                    icon:'💙', price:18500, old:null,  stock:40, rating:4.6, rv:134, badge:'NEW',  desc:'Цэнхэр өнгөтэй хандалдаг цэцэг. Хүчлийн нөлөөгөөр өнгө нь хувирдаг.',                                  sizes:['100g']},
-  {id:11,name:'UP Portafilter 58mm',                cat:'Бариста хэрэгсэл',   img:'images/barista/upporta.png',                    icon:'⚙️', price:55000,old:70000,stock:8,  rating:4.9, rv:97,  badge:'HOT',  desc:'Австралийн Rhino портафильтр. 58мм, зэвэрдэггүй ган. Эспрессо машинтай нийцнэ.',                         sizes:['58mm']},
-  {id:12,name:'UP Steam',                           cat:'Бариста хэрэгсэл',   img:'images/barista/steamer.png',                    icon:'🔨', price:85000, old:null,  stock:12, rating:4.8, rv:156, badge:null,   desc:'Зохицуулагдах даралтын тэмпер. 10–30 кг даралтын горимтой.',                                             sizes:['58mm']},
-  {id:13,name:'Pomona Yogurt Powder 1kg',           cat:'Powder',             img:'images/powder/yogurt.jpg',                    icon:'🍃', price:32000, old:38000, stock:30, rating:4.7, rv:211, badge:'SALE', desc:'Японы ceremonial grade matcha. Тод ногоон өнгө, гүн амт. Latte, smoothie-д тохиромжтой.',                 sizes:['100g','250g']},
-  {id:14,name:'Pomona Syrup Pomp',                  cat:'Дагалдах хэрэгсэл',  img:'images/dagaldah/syruppomp.jpg',                    icon:'🧉', price:15000, old:null,  stock:0,  rating:4.5, rv:78,  badge:null,   desc:'Дахин ашиглах боломжтой металл сорох хоолой. 4 ширхэг + цэвэрлэх хавчаар.',                              sizes:['4 ширхэг']},
-];
+const SUPABASE_URL = "https://vbgqgwfcklkfecvocsyt.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZiZ3Fnd2Zja2xrZmVjdm9jc3l0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExODUyMDIsImV4cCI6MjA5Njc2MTIwMn0.kmFSbs2nDXCRbzaAck-yI5NN9rH2FL5r84bp8cCY3Ac";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ─────────────────────────────────────────────
-// Helper: бүтээгдэхүүний зургийг HTML болгох
+// STATE
 // ─────────────────────────────────────────────
-function prodImgHtml(p, cls='') {
-  if (p.img) {
-    return `<img src="${p.img}" alt="${p.name}" class="${cls}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <span style="display:none;font-size:56px;width:100%;height:100%;align-items:center;justify-content:center">${p.icon}</span>`;
+let P = [];           // products array — Supabase-аас ачаалагдана
+let cart = [];
+let wish = [];
+let curProd = null;
+let curCat = 'all';
+let starCount = 5;
+let currentUser = null;
+let shipFee = 5000;
+let discountAmt = 0;
+
+// ─────────────────────────────────────────────
+// INIT — Supabase auth state + products load
+// ─────────────────────────────────────────────
+(async function init() {
+  // 1. Auth session шалгах
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) {
+    currentUser = session.user;
+    updateAuthUI();
   }
-  return `<span style="font-size:56px">${p.icon}</span>`;
+
+  // 2. Auth өөрчлөлтийг listen хийх
+  sb.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    updateAuthUI();
+    // Хэрэв auth хуудас нээлттэй бол шинэчлэх
+    if (document.getElementById('page-auth').classList.contains('active')) {
+      renderAuth('login');
+    }
+  });
+
+  // 3. Бүтээгдэхүүн ачаалах
+  await loadProducts();
+})();
+
+// ─────────────────────────────────────────────
+// LOAD PRODUCTS from Supabase
+// ─────────────────────────────────────────────
+async function loadProducts() {
+  try {
+    const { data, error } = await sb.from('products').select('*');
+    if (error) throw error;
+
+    P = data.map(item => ({
+      id: item.id,
+      name: item.name,
+      cat: item.category || 'Бусад',
+      img: item.image_url || null,
+      price: Number(item.price) || 0,
+      old: item.old_price ? Number(item.old_price) : null,
+      stock: item.stock ?? 99,
+      desc: item.description || '',
+      badge: item.badge || 'HOT',
+      rating: item.rating || 5,
+      rv: item.review_count || 0,
+      icon: item.icon || '☕',
+      sizes: item.sizes || []
+    }));
+
+  } catch (err) {
+    console.error('Бүтээгдэхүүн ачаалахад алдаа:', err);
+    toast('Бүтээгдэхүүн ачаалахад алдаа гарлаа', 'err');
+    P = [];
+  }
+
+  // Ачаалсны дараа render хийнэ
+  renderHome();
+  // Хэрэв catalog хуудас нээлттэй бол
+  if (document.getElementById('page-catalog').classList.contains('active')) {
+    renderCatalog();
+  }
 }
 
-function detailImgHtml(p) {
-  if (p.img) {
-    return `<img src="${p.img}" alt="${p.name}" class="det-main-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <span class="det-main-emoji" style="display:none">${p.icon}</span>`;
+// ─────────────────────────────────────────────
+// AUTH UI UPDATE
+// ─────────────────────────────────────────────
+function updateAuthUI() {
+  const navBtn = document.getElementById('navAuthBtn');
+  const mmBtn = document.getElementById('mmAuthBtn');
+  const bnItem = document.getElementById('bn-auth');
+
+  if (currentUser) {
+    const email = currentUser.email || '';
+    const initials = email.charAt(0).toUpperCase();
+    if (navBtn) navBtn.textContent = '👤 Профайл';
+    if (mmBtn) mmBtn.querySelector('span').textContent = 'Профайл';
+    if (bnItem) bnItem.querySelector('.bn-label').textContent = 'Профайл';
+
+    // Profile sidebar шинэчлэх
+    const profAva = document.getElementById('profAva');
+    const profName = document.getElementById('profName');
+    const profEmailEl = document.getElementById('profEmailEl');
+    if (profAva) profAva.textContent = initials;
+    if (profName) profName.textContent = currentUser.user_metadata?.name || email.split('@')[0];
+    if (profEmailEl) profEmailEl.textContent = email;
+  } else {
+    if (navBtn) navBtn.textContent = 'Нэвтрэх';
+    if (mmBtn) mmBtn.querySelector('span').textContent = 'Нэвтрэх / Бүртгүүлэх';
+    if (bnItem) bnItem.querySelector('.bn-label').textContent = 'Нэвтрэх';
   }
-  return `<span class="det-main-emoji">${p.icon}</span>`;
 }
 
-function thumbImgHtml(p) {
-  if (p.img) {
-    return `<img src="${p.img}" alt="${p.name}" class="det-thumb-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <span style="display:none;font-size:26px">${p.icon}</span>`;
+function handleAuthNav() {
+  if (currentUser) {
+    nav('profile');
+  } else {
+    nav('auth');
   }
-  return `<span style="font-size:26px">${p.icon}</span>`;
-}
-
-function cartImgHtml(p) {
-  if (p.img) {
-    return `<img src="${p.img}" alt="${p.name}" class="ci-img-inner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <span style="display:none;font-size:28px">${p.icon}</span>`;
-  }
-  return `<span style="font-size:28px">${p.icon}</span>`;
 }
 
 // ─────────────────────────────────────────────
-// State
+// AUTH — нэвтрэх / бүртгүүлэх (Supabase)
 // ─────────────────────────────────────────────
-let cart=[],wish=[],curProd=null,curCat='all',starCount=5;
-let currentUser=null;
-let shipFee=5000,discountAmt=0;
+function renderAuth(mode) {
+  const el = document.getElementById('authContent');
+  if (!el) return;
 
-function fmt(n){return '₮'+Math.round(n).toLocaleString()}
+  if (currentUser) {
+    const email = currentUser.email || '';
+    const name = currentUser.user_metadata?.name || email.split('@')[0];
+    el.innerHTML = `<div class="auth-success">
+      <span class="auth-success-icon">☕</span>
+      <h3>Тавтай морилно уу!</h3>
+      <p style="color:var(--ct2);font-size:14px;margin-bottom:6px">${name}</p>
+      <p style="color:var(--ct3);font-size:12px;font-family:'Space Mono',monospace;margin-bottom:20px">${email}</p>
+      <button class="btn-checkout" onclick="nav('profile')">Профайл харах</button>
+      <div style="margin-top:12px;text-align:center">
+        <span style="font-size:13px;color:var(--ca);cursor:pointer;font-weight:500" onclick="doLogout()">Гарах</span>
+      </div>
+    </div>`;
+    return;
+  }
 
-function toast(msg,type){
-  const w=document.getElementById('toastWrap');
-  const t=document.createElement('div');
-  t.className='toast '+(type||'');
-  t.textContent=msg;
+  if (mode === 'login') {
+    el.innerHTML = `<div class="auth-tabs">
+      <button class="auth-tab active" onclick="renderAuth('login')">Нэвтрэх</button>
+      <button class="auth-tab" onclick="renderAuth('reg')">Бүртгүүлэх</button>
+    </div>
+    <div class="auth-form" id="authForm">
+      <div class="fg"><label>И-МЭЙЛ</label><input type="email" id="loginEmail" placeholder="email@example.com" autocomplete="email"></div>
+      <div class="fg"><label>НУУЦ ҮГ</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
+      <div style="text-align:right;margin-top:-4px">
+        <span style="font-size:13px;color:var(--ca);cursor:pointer;font-weight:500" onclick="doForgotPassword()">Нууц үгээ мартсан уу?</span>
+      </div>
+      <button class="btn-checkout" id="loginBtn" onclick="doLogin()">Нэвтрэх</button>
+    </div>
+    <div class="auth-footer-link">Бүртгэлгүй юу? <a onclick="renderAuth('reg')">Бүртгүүлэх</a></div>`;
+  } else {
+    el.innerHTML = `<div class="auth-tabs">
+      <button class="auth-tab" onclick="renderAuth('login')">Нэвтрэх</button>
+      <button class="auth-tab active" onclick="renderAuth('reg')">Бүртгүүлэх</button>
+    </div>
+    <div class="auth-form" id="authForm">
+      <div class="fg"><label>НЭР</label><input type="text" id="regName" placeholder="Бариста Батбаяр" autocomplete="name"></div>
+      <div class="fg"><label>И-МЭЙЛ</label><input type="email" id="regEmail" placeholder="email@example.com" autocomplete="email"></div>
+      <div class="fg"><label>НУУЦ ҮГ</label><input type="password" id="regPass" placeholder="•••••••• (8+ тэмдэгт)" autocomplete="new-password"></div>
+      <div class="fg"><label>НУУЦ ҮГ ДАВТАХ</label><input type="password" id="regPass2" placeholder="••••••••" autocomplete="new-password"></div>
+      <button class="btn-checkout" id="regBtn" onclick="doRegister()">Бүртгүүлэх →</button>
+    </div>
+    <div class="auth-footer-link">Бүртгэлтэй юу? <a onclick="renderAuth('login')">Нэвтрэх</a></div>`;
+  }
+}
+
+function clearAuthErrors() {
+  document.querySelectorAll('#authForm .input-error').forEach(el => el.classList.remove('input-error'));
+  document.querySelectorAll('#authForm .error-msg').forEach(el => el.remove());
+}
+
+function setFieldError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('input-error');
+  const err = document.createElement('div');
+  err.className = 'error-msg';
+  err.textContent = msg;
+  el.parentNode.appendChild(err);
+}
+
+function setBtnLoading(btnId, loading, defaultText) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  if (loading) {
+    btn.innerHTML = `<span class="spinner"></span> Түр хүлээнэ үү...`;
+    btn.classList.add('btn-loading');
+  } else {
+    btn.innerHTML = defaultText;
+    btn.classList.remove('btn-loading');
+  }
+}
+
+// НЭВТРЭХ — Supabase signInWithPassword
+async function doLogin() {
+  clearAuthErrors();
+  const email = document.getElementById('loginEmail')?.value.trim();
+  const pass = document.getElementById('loginPass')?.value;
+
+  let ok = true;
+  if (!email || !email.includes('@')) { setFieldError('loginEmail', 'Зөв и-мэйл оруулна уу'); ok = false; }
+  if (!pass || pass.length < 6) { setFieldError('loginPass', 'Нууц үг оруулна уу (6+ тэмдэгт)'); ok = false; }
+  if (!ok) return;
+
+  setBtnLoading('loginBtn', true, 'Нэвтрэх');
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+
+  setBtnLoading('loginBtn', false, 'Нэвтрэх');
+
+  if (error) {
+    let msg = 'Нэвтрэхэд алдаа гарлаа';
+    if (error.message.includes('Invalid login credentials')) msg = 'И-мэйл эсвэл нууц үг буруу байна';
+    if (error.message.includes('Email not confirmed')) msg = 'И-мэйлээ баталгаажуулна уу';
+    toast(msg, 'err');
+    setFieldError('loginPass', msg);
+    return;
+  }
+
+  toast('☕ Амжилттай нэвтэрлээ! Тавтай морилно уу!', 'success');
+  renderAuth('login'); // onAuthStateChange дуудагдаж currentUser шинэчлэгдэнэ
+}
+
+// БҮРТГҮҮЛЭХ — Supabase signUp
+async function doRegister() {
+  clearAuthErrors();
+  const name = document.getElementById('regName')?.value.trim();
+  const email = document.getElementById('regEmail')?.value.trim();
+  const pass = document.getElementById('regPass')?.value;
+  const pass2 = document.getElementById('regPass2')?.value;
+
+  let ok = true;
+  if (!name) { setFieldError('regName', 'Нэр оруулна уу'); ok = false; }
+  if (!email || !email.includes('@')) { setFieldError('regEmail', 'Зөв и-мэйл оруулна уу'); ok = false; }
+  if (!pass || pass.length < 8) { setFieldError('regPass', '8-аас дээш тэмдэгт оруулна уу'); ok = false; }
+  else if (pass !== pass2) { setFieldError('regPass2', 'Нууц үг таарахгүй байна'); ok = false; }
+  if (!ok) return;
+
+  setBtnLoading('regBtn', true, 'Бүртгүүлэх →');
+
+  const { data, error } = await sb.auth.signUp({
+    email,
+    password: pass,
+    options: {
+      data: { name }
+    }
+  });
+
+  setBtnLoading('regBtn', false, 'Бүртгүүлэх →');
+
+  if (error) {
+    let msg = 'Бүртгүүлэхэд алдаа гарлаа';
+    if (error.message.includes('already registered')) msg = 'Энэ и-мэйл бүртгэлтэй байна';
+    if (error.message.includes('Password should')) msg = 'Нууц үг хэт богино байна (мин. 6 тэмдэгт)';
+    toast(msg, 'err');
+    setFieldError('regEmail', msg);
+    return;
+  }
+
+  // Email confirmation шаарддаг бол
+  if (data.user && !data.session) {
+    const el = document.getElementById('authContent');
+    el.innerHTML = `<div class="auth-success">
+      <span class="auth-success-icon">📧</span>
+      <h3>И-мэйл шалгаарай!</h3>
+      <p style="color:var(--ct2);font-size:14px;line-height:1.7">${email} хаяг руу баталгаажуулах линк илгээгдлээ.<br>И-мэйлээ нээж баталгаажуулна уу.</p>
+    </div>`;
+    toast('📧 Баталгаажуулах и-мэйл илгээгдлээ!', 'success');
+    return;
+  }
+
+  toast('🎉 Амжилттай бүртгүүллээ! Тавтай морилно уу!', 'success');
+}
+
+// НУУЦ ҮГ МАРТСАН
+async function doForgotPassword() {
+  const email = document.getElementById('loginEmail')?.value.trim();
+  if (!email || !email.includes('@')) {
+    setFieldError('loginEmail', 'Эхлээд и-мэйлээ оруулна уу');
+    return;
+  }
+  const { error } = await sb.auth.resetPasswordForEmail(email);
+  if (error) {
+    toast('Алдаа гарлаа: ' + error.message, 'err');
+    return;
+  }
+  toast('📧 Нууц үг сэргээх линк илгээгдлээ', 'success');
+}
+
+// ГАРАХ
+async function doLogout() {
+  await sb.auth.signOut();
+  currentUser = null;
+  updateAuthUI();
+  nav('home');
+  toast('Амжилттай гарлаа', 'success');
+}
+
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+function fmt(n) { return '₮' + Math.round(n).toLocaleString(); }
+
+function toast(msg, type) {
+  const w = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast ' + (type || '');
+  t.textContent = msg;
   w.appendChild(t);
-  requestAnimationFrame(()=>t.classList.add('show'));
-  setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),400)},3400);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3400);
 }
 
-function nav(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
-  const bnMap={home:'bn-home',catalog:'bn-catalog',wish:'bn-wish',auth:'bn-auth'};
-  if(bnMap[page]){document.getElementById(bnMap[page]).classList.add('active')}
-  if(page==='home')renderHome();
-  if(page==='catalog')renderCatalog();
-  if(page==='wish')renderWish();
-  if(page==='profile')renderProf('orders');
-  if(page==='checkout')renderCheckout();
-  if(page==='auth')renderAuth('login');
+function nav(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  const bnMap = { home: 'bn-home', catalog: 'bn-catalog', wish: 'bn-wish', auth: 'bn-auth' };
+  if (bnMap[page]) document.getElementById(bnMap[page]).classList.add('active');
+  if (page === 'home') renderHome();
+  if (page === 'catalog') renderCatalog();
+  if (page === 'wish') renderWish();
+  if (page === 'profile') { renderProf('orders'); }
+  if (page === 'checkout') renderCheckout();
+  if (page === 'auth') renderAuth('login');
 }
 
-function filterCat(cat){curCat=cat;nav('catalog')}
-
-function openMM(){document.getElementById('mobileMenu').classList.add('open')}
-function closeMM(){document.getElementById('mobileMenu').classList.remove('open')}
+function filterCat(cat) { curCat = cat; nav('catalog'); }
+function openMM() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMM() { document.getElementById('mobileMenu').classList.remove('open'); }
 
 // ─────────────────────────────────────────────
-// Product card — зурагтай
+// PRODUCT CARD
 // ─────────────────────────────────────────────
-function pCard(p){
-  const w=wish.includes(p.id);
-  const disc=p.old?Math.round((1-p.price/p.old)*100):0;
-  return `<div class="prod-card" onclick="openProd(${p.id})">
+function pCard(p) {
+  const w = wish.includes(p.id);
+  const disc = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+  return `<div class="prod-card" onclick="openProd(${JSON.stringify(p.id)})">
     <div class="prod-img">
-      ${p.badge?`<div class="prod-badge badge-${p.badge.toLowerCase()}">${p.badge}</div>`:''}
-      <button class="prod-wish${w?' on':''}" onclick="event.stopPropagation();toggleWish(${p.id},this)">${w?'❤️':'🤍'}</button>
+      ${p.badge ? `<div class="prod-badge badge-${p.badge.toLowerCase()}">${p.badge}</div>` : ''}
+      <button class="prod-wish${w ? ' on' : ''}" onclick="event.stopPropagation();toggleWish(${JSON.stringify(p.id)},this)">${w ? '❤️' : '🤍'}</button>
       ${p.img
-        ? `<img src="${p.img}" alt="${p.name}" class="prod-icon-img"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-           ><span class="prod-icon-emoji" style="display:none">${p.icon}</span>`
+        ? `<img src="${p.img}" alt="${p.name}" class="prod-icon-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+           <span class="prod-icon-emoji" style="display:none">${p.icon}</span>`
         : `<span class="prod-icon-emoji">${p.icon}</span>`
       }
     </div>
@@ -1012,164 +1257,239 @@ function pCard(p){
       <div class="prod-name">${p.name}</div>
       <div class="prod-price-row">
         <span class="prod-price">${fmt(p.price)}</span>
-        ${p.old?`<span class="prod-old">${fmt(p.old)}</span><span class="prod-disc">-${disc}%</span>`:''}
+        ${p.old ? `<span class="prod-old">${fmt(p.old)}</span><span class="prod-disc">-${disc}%</span>` : ''}
       </div>
-      <div class="prod-rating"><span class="stars">${'★'.repeat(Math.round(p.rating))}</span><span>${p.rating}</span><span>(${p.rv})</span>${p.stock===0?'<span style="margin-left:auto;color:#9B2226;font-size:9px;font-family:\'Space Mono\',monospace">ДУУССАН</span>':''}</div>
-      <button class="prod-btn" onclick="event.stopPropagation();addCart(${p.id})" ${p.stock===0?'disabled':''}>
-        ${p.stock===0?'Дууссан':'+ Сагсанд нэмэх'}
+      <div class="prod-rating">
+        <span class="stars">${'★'.repeat(Math.round(p.rating))}</span>
+        <span>${p.rating}</span>
+        <span>(${p.rv})</span>
+        ${p.stock === 0 ? '<span style="margin-left:auto;color:#9B2226;font-size:9px;font-family:\'Space Mono\',monospace">ДУУССАН</span>' : ''}
+      </div>
+      <button class="prod-btn" onclick="event.stopPropagation();addCart(${JSON.stringify(p.id)})" ${p.stock === 0 ? 'disabled' : ''}>
+        ${p.stock === 0 ? 'Дууссан' : '+ Сагсанд нэмэх'}
       </button>
     </div>
   </div>`;
 }
 
-function renderHome(){
-  const f=document.getElementById('homeFeatured');
-  const n=document.getElementById('homeNew');
-  if(f)f.innerHTML=P.filter(p=>p.badge==='HOT').map(pCard).join('');
-  if(n)n.innerHTML=P.filter(p=>p.badge==='NEW'||p.badge==='SALE').map(pCard).join('');
+function renderHome() {
+  const f = document.getElementById('homeFeatured');
+  const n = document.getElementById('homeNew');
+  if (!P.length) return; // Ачааллаагүй бол skip
+
+  if (f) {
+    const featured = P.filter(p => p.badge === 'HOT').slice(0, 8);
+    f.innerHTML = featured.length
+      ? `<div class="product-grid">${featured.map(pCard).join('')}</div>`
+      : '<p style="color:var(--ct3);padding:20px;font-size:14px">Бараа байхгүй байна</p>';
+  }
+  if (n) {
+    const newProds = P.filter(p => p.badge === 'NEW' || p.badge === 'SALE').slice(0, 8);
+    n.innerHTML = newProds.length
+      ? `<div class="product-grid">${newProds.map(pCard).join('')}</div>`
+      : '<p style="color:var(--ct3);padding:20px;font-size:14px">Шинэ бараа байхгүй байна</p>';
+  }
 }
 
-function applyCatalog(){
-  let r=[...P];
-  if(curCat!=='all')r=r.filter(p=>p.cat===curCat);
-  const mn=parseInt(document.getElementById('pMin')?.value)||0;
-  const mx=parseInt(document.getElementById('pMax')?.value)||Infinity;
-  r=r.filter(p=>p.price>=mn&&p.price<=mx);
-  const s=document.getElementById('sortBy')?.value||'';
-  if(s==='pasc')r.sort((a,b)=>a.price-b.price);
-  if(s==='pdesc')r.sort((a,b)=>b.price-a.price);
-  if(s==='rating')r.sort((a,b)=>b.rating-a.rating);
-  const g=document.getElementById('catalogGrid');
-  if(g)g.innerHTML=r.length?r.map(pCard).join(''):`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ct3);font-family:'Space Mono',monospace;font-size:13px">Бараа олдсонгүй</div>`;
-  const ct=document.getElementById('catTitle');
-  const pc=document.getElementById('prodCount');
-  if(ct)ct.textContent=curCat==='all'?'Бүх бараа':curCat;
-  if(pc)pc.textContent=r.length+' бараа';
-  document.getElementById('bcCat').textContent=curCat==='all'?'Бүтээгдэхүүн':curCat;
+function applyCatalog() {
+  let r = [...P];
+  if (curCat !== 'all') r = r.filter(p => p.cat === curCat);
+  const mn = parseInt(document.getElementById('pMin')?.value) || 0;
+  const mx = parseInt(document.getElementById('pMax')?.value) || Infinity;
+  r = r.filter(p => p.price >= mn && p.price <= mx);
+  const s = document.getElementById('sortBy')?.value || '';
+  if (s === 'pasc') r.sort((a, b) => a.price - b.price);
+  if (s === 'pdesc') r.sort((a, b) => b.price - a.price);
+  if (s === 'rating') r.sort((a, b) => b.rating - a.rating);
+  const g = document.getElementById('catalogGrid');
+  if (g) g.innerHTML = r.length
+    ? r.map(pCard).join('')
+    : `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ct3);font-family:'Space Mono',monospace;font-size:13px">Бараа олдсонгүй</div>`;
+  const ct = document.getElementById('catTitle');
+  const pc = document.getElementById('prodCount');
+  if (ct) ct.textContent = curCat === 'all' ? 'Бүх бараа' : curCat;
+  if (pc) pc.textContent = r.length + ' бараа';
+  const bcCat = document.getElementById('bcCat');
+  if (bcCat) bcCat.textContent = curCat === 'all' ? 'Бүтээгдэхүүн' : curCat;
 }
 
-function renderCatalog(){
-  const cats=['all',...new Set(P.map(p=>p.cat))];
-  const pills=document.getElementById('catalogPills');
-  if(pills)pills.innerHTML=cats.map(c=>`<div class="cat-pill${curCat===c?' active':''}" onclick="curCat='${c}';applyCatalog();document.querySelectorAll('.cat-pill').forEach(el=>el.classList.remove('active'));this.classList.add('active')">${c==='all'?'Бүгд':c}</div>`).join('');
-  const sc=document.getElementById('sidebarCats');
-  if(sc)sc.innerHTML=cats.map(c=>`<button class="sidebar-cat-item${curCat===c?' active':''}" onclick="curCat='${c}';applyCatalog()">${c==='all'?'Бүгд':c}</button>`).join('');
+function renderCatalog() {
+  const cats = ['all', ...new Set(P.map(p => p.cat))];
+  const pills = document.getElementById('catalogPills');
+  if (pills) pills.innerHTML = cats.map(c =>
+    `<div class="cat-pill${curCat === c ? ' active' : ''}" onclick="curCat='${c}';applyCatalog();document.querySelectorAll('.cat-pill').forEach(el=>el.classList.remove('active'));this.classList.add('active')">${c === 'all' ? 'Бүгд' : c}</div>`
+  ).join('');
+  const sc = document.getElementById('sidebarCats');
+  if (sc) sc.innerHTML = cats.map(c =>
+    `<button class="sidebar-cat-item${curCat === c ? ' active' : ''}" onclick="curCat='${c}';applyCatalog()">${c === 'all' ? 'Бүгд' : c}</button>`
+  ).join('');
   applyCatalog();
 }
 
-function quickSearch(q){
-  const r=q.trim()?P.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())||p.cat.toLowerCase().includes(q.toLowerCase())):P.filter(p=>curCat==='all'||p.cat===curCat);
-  const g=document.getElementById('catalogGrid');
-  if(g)g.innerHTML=r.length?r.map(pCard).join(''):`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ct3);font-family:'Space Mono',monospace;font-size:13px">"${q}" — олдсонгүй</div>`;
-  const pc=document.getElementById('prodCount');
-  if(pc)pc.textContent=r.length+' бараа';
+function quickSearch(q) {
+  const r = q.trim()
+    ? P.filter(p => p.name.toLowerCase().includes(q.toLowerCase()) || p.cat.toLowerCase().includes(q.toLowerCase()))
+    : P.filter(p => curCat === 'all' || p.cat === curCat);
+  const g = document.getElementById('catalogGrid');
+  if (g) g.innerHTML = r.length
+    ? r.map(pCard).join('')
+    : `<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--ct3);font-family:'Space Mono',monospace;font-size:13px">"${q}" — олдсонгүй</div>`;
+  const pc = document.getElementById('prodCount');
+  if (pc) pc.textContent = r.length + ' бараа';
 }
 
-function doSearch(){const q=document.getElementById('searchQ').value.trim();if(q){curCat='all';nav('catalog');setTimeout(()=>quickSearch(q),50)}}
+function doSearch() {
+  const q = document.getElementById('searchQ').value.trim();
+  if (q) { curCat = 'all'; nav('catalog'); setTimeout(() => quickSearch(q), 50); }
+}
 
 // ─────────────────────────────────────────────
-// Product detail — зурагтай
+// PRODUCT DETAIL
 // ─────────────────────────────────────────────
-function openProd(id){
-  const p=P.find(x=>x.id===id);if(!p)return;
-  curProd=p;
-  document.getElementById('detBc').textContent=p.name;
-  document.getElementById('detCat').textContent=p.cat;
-  document.getElementById('detName').textContent=p.name;
+function openProd(id) {
+  const p = P.find(x => x.id === id);
+  if (!p) return;
+  curProd = p;
+  document.getElementById('detBc').textContent = p.name;
+  document.getElementById('detCat').textContent = p.cat;
+  document.getElementById('detName').textContent = p.name;
 
-  // Main image
-  const mainEl=document.getElementById('detMain');
-  mainEl.innerHTML=p.img
+  const mainEl = document.getElementById('detMain');
+  mainEl.innerHTML = p.img
     ? `<img src="${p.img}" alt="${p.name}" class="det-main-img"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
        <span class="det-main-emoji" style="display:none">${p.icon}</span>`
     : `<span class="det-main-emoji">${p.icon}</span>`;
 
-  // Thumbnails
-  document.getElementById('detThumbs').innerHTML=[0,1,2].map((i)=>`
-    <div class="det-thumb${i===0?' on':''}">${
+  document.getElementById('detThumbs').innerHTML = [0, 1, 2].map((i) =>
+    `<div class="det-thumb${i === 0 ? ' on' : ''}">${
       p.img
         ? `<img src="${p.img}" alt="${p.name}" class="det-thumb-img"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
            <span style="display:none;font-size:26px">${p.icon}</span>`
         : `<span style="font-size:26px">${p.icon}</span>`
-    }</div>`).join('');
+    }</div>`
+  ).join('');
 
-  const disc=p.old?Math.round((1-p.price/p.old)*100):0;
-  document.getElementById('detPrice').textContent=fmt(p.price);
-  document.getElementById('detOld').textContent=p.old?fmt(p.old):'';
-  const ds=document.getElementById('detSave');
-  ds.textContent=p.old?`-${disc}%`:'';
-  ds.style.display=p.old?'inline':'none';
-  const s=document.getElementById('detStock');
-  s.innerHTML=p.stock===0?'<span class="stock-out">❌ Дууссан</span>':p.stock<10?`<span class="stock-low">⚠️ Нөөц бага (${p.stock} үлдсэн)</span>`:`<span class="stock-ok">✅ Байна (${p.stock})</span>`;
-  document.getElementById('detStars').innerHTML=`<span class="stars">${'★'.repeat(Math.round(p.rating))}</span><span style="font-size:14px;font-weight:600;color:var(--ct);margin-left:4px">${p.rating}</span><span style="font-size:12px;color:var(--ct3)">&nbsp;(${p.rv} сэтгэгдэл)</span>`;
-  document.getElementById('detDesc').textContent=p.desc;
-  const vv=document.getElementById('detVariants');
-  vv.innerHTML=`<div style="margin-bottom:16px"><div class="det-label">ХЭМЖЭЭ СОНГОХ</div><div class="variant-pills">${p.sizes.map((s,i)=>`<div class="var-pill${i===0?' on':''}" onclick="document.querySelectorAll('.var-pill').forEach(v=>v.classList.remove('on'));this.classList.add('on')">${s}</div>`).join('')}</div></div>`;
-  const btn=document.getElementById('detAddBtn');
-  btn.disabled=p.stock===0;
-  btn.style.background=p.stock===0?'var(--cb3)':'var(--cr)';
-  btn.textContent=p.stock===0?'Дууссан':'🛒 Сагсанд нэмэх';
-  document.getElementById('detWish').textContent=wish.includes(p.id)?'❤️':'🤍';
-  document.getElementById('reviewList').innerHTML=[
-    {n:'Ганболд Б.',r:5,t:'Frappe-д хийхэд гайхалтай!'},
-    {n:'Уянга Д.',r:5,t:'Хурдан хүргэж өгсөн, бараа 100% чанартай.'},
-    {n:'Мөнхбаяр Т.',r:4,t:'Маш сайн бараа, дахин захиалах болно.'}
-  ].map(v=>`<div class="review-card"><div class="rev-head"><span class="rev-author">${v.n} <span class="stars" style="font-size:12px">${'★'.repeat(v.r)}</span></span><span class="rev-date">2024-11</span></div><div class="rev-text">${v.t}</div></div>`).join('');
+  const disc = p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+  document.getElementById('detPrice').textContent = fmt(p.price);
+  document.getElementById('detOld').textContent = p.old ? fmt(p.old) : '';
+  const ds = document.getElementById('detSave');
+  ds.textContent = p.old ? `-${disc}%` : '';
+  ds.style.display = p.old ? 'inline' : 'none';
+
+  const s = document.getElementById('detStock');
+  s.innerHTML = p.stock === 0
+    ? '<span class="stock-out">❌ Дууссан</span>'
+    : p.stock < 10
+      ? `<span class="stock-low">⚠️ Нөөц бага (${p.stock} үлдсэн)</span>`
+      : `<span class="stock-ok">✅ Байна (${p.stock})</span>`;
+
+  document.getElementById('detStars').innerHTML =
+    `<span class="stars">${'★'.repeat(Math.round(p.rating))}</span>
+     <span style="font-size:14px;font-weight:600;color:var(--ct);margin-left:4px">${p.rating}</span>
+     <span style="font-size:12px;color:var(--ct3)">&nbsp;(${p.rv} сэтгэгдэл)</span>`;
+
+  document.getElementById('detDesc').textContent = p.desc;
+
+  const vv = document.getElementById('detVariants');
+  vv.innerHTML = p.sizes && p.sizes.length
+    ? `<div style="margin-bottom:16px">
+        <div class="det-label">ХЭМЖЭЭ СОНГОХ</div>
+        <div class="variant-pills">
+          ${p.sizes.map((sz, i) =>
+            `<div class="var-pill${i === 0 ? ' on' : ''}"
+              onclick="document.querySelectorAll('.var-pill').forEach(v=>v.classList.remove('on'));this.classList.add('on')">${sz}</div>`
+          ).join('')}
+        </div>
+      </div>`
+    : '';
+
+  const btn = document.getElementById('detAddBtn');
+  btn.disabled = p.stock === 0;
+  btn.style.background = p.stock === 0 ? 'var(--cb3)' : 'var(--cr)';
+  btn.textContent = p.stock === 0 ? 'Дууссан' : '🛒 Сагсанд нэмэх';
+  document.getElementById('detWish').textContent = wish.includes(p.id) ? '❤️' : '🤍';
+
+  document.getElementById('reviewList').innerHTML = [
+    { n: 'Ганболд Б.', r: 5, t: 'Frappe-д хийхэд гайхалтай!' },
+    { n: 'Уянга Д.', r: 5, t: 'Хурдан хүргэж өгсөн, бараа 100% чанартай.' },
+    { n: 'Мөнхбаяр Т.', r: 4, t: 'Маш сайн бараа, дахин захиалах болно.' }
+  ].map(v =>
+    `<div class="review-card">
+      <div class="rev-head">
+        <span class="rev-author">${v.n} <span class="stars" style="font-size:12px">${'★'.repeat(v.r)}</span></span>
+        <span class="rev-date">2024-11</span>
+      </div>
+      <div class="rev-text">${v.t}</div>
+    </div>`
+  ).join('');
+
   nav('detail');
 }
 
-function addFromDetail(){if(curProd)addCart(curProd.id)}
-function toggleWishDetail(){
-  if(curProd){
-    toggleWish(curProd.id,null);
-    document.getElementById('detWish').textContent=wish.includes(curProd.id)?'❤️':'🤍';
+function addFromDetail() { if (curProd) addCart(curProd.id); }
+
+function toggleWishDetail() {
+  if (curProd) {
+    toggleWish(curProd.id, null);
+    document.getElementById('detWish').textContent = wish.includes(curProd.id) ? '❤️' : '🤍';
   }
 }
 
-function addCart(id){
-  const p=P.find(x=>x.id===id);if(!p||p.stock===0){toast('Дууссан!','err');return}
-  const ex=cart.find(x=>x.id===id);
-  if(ex)ex.qty=Math.min(ex.qty+1,p.stock);
-  else cart.push({...p,qty:1});
-  updBadge();toast('☕ Сагсанд нэмлээ!','success');
-}
-
-function updBadge(){
-  const n=cart.reduce((s,i)=>s+i.qty,0);
-  document.getElementById('cartBadge').textContent=n;
-  document.getElementById('bnBadge').textContent=n;
-  document.getElementById('bnBadge').style.display=n>0?'flex':'none';
-}
-
-function toggleWish(id,btn){
-  const i=wish.indexOf(id);
-  if(i>-1){wish.splice(i,1);if(btn){btn.textContent='🤍';btn.classList.remove('on')}toast('Хасагдлаа','err')}
-  else{wish.push(id);if(btn){btn.textContent='❤️';btn.classList.add('on')}toast('❤️ Таалагдсанд нэмлээ!','success')}
-}
-
 // ─────────────────────────────────────────────
-// Cart drawer — зурагтай
+// CART
 // ─────────────────────────────────────────────
-function openCart(){
+function addCart(id) {
+  const p = P.find(x => x.id === id);
+  if (!p || p.stock === 0) { toast('Дууссан!', 'err'); return; }
+  const ex = cart.find(x => x.id === id);
+  if (ex) ex.qty = Math.min(ex.qty + 1, p.stock);
+  else cart.push({ ...p, qty: 1 });
+  updBadge();
+  toast('☕ Сагсанд нэмлээ!', 'success');
+}
+
+function updBadge() {
+  const n = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartBadge').textContent = n;
+  document.getElementById('bnBadge').textContent = n;
+  document.getElementById('bnBadge').style.display = n > 0 ? 'flex' : 'none';
+}
+
+function toggleWish(id, btn) {
+  const i = wish.indexOf(id);
+  if (i > -1) {
+    wish.splice(i, 1);
+    if (btn) { btn.textContent = '🤍'; btn.classList.remove('on'); }
+    toast('Хасагдлаа', 'err');
+  } else {
+    wish.push(id);
+    if (btn) { btn.textContent = '❤️'; btn.classList.add('on'); }
+    toast('❤️ Таалагдсанд нэмлээ!', 'success');
+  }
+}
+
+function openCart() {
   document.getElementById('cartBd').classList.add('open');
   document.getElementById('cartDrawer').classList.add('open');
   renderDrawer();
 }
-function closeCart(){
+
+function closeCart() {
   document.getElementById('cartBd').classList.remove('open');
   document.getElementById('cartDrawer').classList.remove('open');
 }
 
-function renderDrawer(){
-  const b=document.getElementById('drawerBody');
-  const f=document.getElementById('drawerFoot');
-  if(!cart.length){
-    b.innerHTML=`<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--cr);margin-bottom:6px">Сагс хоосон</p></div>`;
-    f.innerHTML='';return;
+function renderDrawer() {
+  const b = document.getElementById('drawerBody');
+  const f = document.getElementById('drawerFoot');
+  if (!cart.length) {
+    b.innerHTML = `<div class="cart-empty"><span class="cart-empty-icon">🛒</span><p style="font-family:'DM Serif Display',serif;font-size:17px;color:var(--cr);margin-bottom:6px">Сагс хоосон</p></div>`;
+    f.innerHTML = '';
+    return;
   }
-  b.innerHTML=cart.map(c=>`<div class="cart-item">
+  b.innerHTML = cart.map(c => `<div class="cart-item">
     <div class="ci-img">${
       c.img
         ? `<img src="${c.img}" alt="${c.name}" class="ci-img-inner"
@@ -1180,277 +1500,288 @@ function renderDrawer(){
     <div class="ci-info">
       <div class="ci-name">${c.name}</div>
       <div class="ci-cat">${c.cat}</div>
-      <div class="ci-price">${fmt(c.price*c.qty)}</div>
+      <div class="ci-price">${fmt(c.price * c.qty)}</div>
       <div class="ci-qty">
-        <button class="qty-btn" onclick="chgQty(${c.id},-1)">−</button>
+        <button class="qty-btn" onclick="chgQty(${JSON.stringify(c.id)},-1)">−</button>
         <span class="qty-num">${c.qty}</span>
-        <button class="qty-btn" onclick="chgQty(${c.id},1)">+</button>
+        <button class="qty-btn" onclick="chgQty(${JSON.stringify(c.id)},1)">+</button>
       </div>
     </div>
-    <button class="ci-remove" onclick="remCart(${c.id})">✕</button>
+    <button class="ci-remove" onclick="remCart(${JSON.stringify(c.id)})">✕</button>
   </div>`).join('');
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  f.innerHTML=`<div class="price-row"><span>Дэд дүн</span><span>${fmt(sub)}</span></div><div class="price-row"><span>Хүргэлт</span><span>₮5,000</span></div><div class="price-row total"><span>Нийт</span><span>${fmt(sub+5000)}</span></div><button class="btn-checkout" onclick="closeCart();nav('checkout')">Захиалга хийх →</button>`;
+
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  f.innerHTML = `
+    <div class="price-row"><span>Дэд дүн</span><span>${fmt(sub)}</span></div>
+    <div class="price-row"><span>Хүргэлт</span><span>₮5,000</span></div>
+    <div class="price-row total"><span>Нийт</span><span>${fmt(sub + 5000)}</span></div>
+    <button class="btn-checkout" onclick="closeCart();nav('checkout')">Захиалга хийх →</button>`;
 }
 
-function chgQty(id,d){const i=cart.find(x=>x.id===id);if(i){i.qty=Math.max(1,i.qty+d)}updBadge();renderDrawer()}
-function remCart(id){cart=cart.filter(x=>x.id!==id);updBadge();renderDrawer()}
+function chgQty(id, d) {
+  const i = cart.find(x => x.id === id);
+  if (i) i.qty = Math.max(1, i.qty + d);
+  updBadge();
+  renderDrawer();
+}
 
-function renderCheckout(){
-  const el=document.getElementById('coItems');
-  if(!el)return;
-  discountAmt=0;
-  document.getElementById('discRow').style.display='none';
-  if(!cart.length){
-    el.innerHTML=`<div style="text-align:center;padding:16px;color:var(--ct3);font-size:13px">Сагс хоосон байна</div>`;
+function remCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updBadge();
+  renderDrawer();
+}
+
+// ─────────────────────────────────────────────
+// CHECKOUT
+// ─────────────────────────────────────────────
+function renderCheckout() {
+  const el = document.getElementById('coItems');
+  if (!el) return;
+  discountAmt = 0;
+  document.getElementById('discRow').style.display = 'none';
+
+  if (!cart.length) {
+    el.innerHTML = `<div style="text-align:center;padding:16px;color:var(--ct3);font-size:13px">Сагс хоосон байна</div>`;
   } else {
-    el.innerHTML=cart.map(c=>`<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ct2);margin-bottom:7px;gap:6px"><span style="flex:1;font-family:'Space Mono',monospace">${c.icon} ${c.name.length>25?c.name.slice(0,25)+'…':c.name} ×${c.qty}</span><span style="font-weight:600;color:var(--ct);white-space:nowrap">${fmt(c.price*c.qty)}</span></div>`).join('');
+    el.innerHTML = cart.map(c =>
+      `<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ct2);margin-bottom:7px;gap:6px">
+        <span style="flex:1;font-family:'Space Mono',monospace">${c.icon} ${c.name.length > 25 ? c.name.slice(0, 25) + '…' : c.name} ×${c.qty}</span>
+        <span style="font-weight:600;color:var(--ct);white-space:nowrap">${fmt(c.price * c.qty)}</span>
+      </div>`
+    ).join('');
   }
+
+  // Нэвтэрсэн хэрэглэгчийн и-мэйлийг автоматаар дүүргэх
+  if (currentUser?.email) {
+    const emailField = document.getElementById('coEmail');
+    if (emailField && !emailField.value) emailField.value = currentUser.email;
+  }
+
   updateCheckoutTotals();
 }
 
-function updateCheckoutTotals(){
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  document.getElementById('coSub').textContent=fmt(sub);
-  document.getElementById('coShip').textContent=fmt(shipFee);
-  document.getElementById('coTotal').textContent=fmt(sub+shipFee-discountAmt);
+function updateCheckoutTotals() {
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('coSub').textContent = fmt(sub);
+  document.getElementById('coShip').textContent = fmt(shipFee);
+  document.getElementById('coTotal').textContent = fmt(sub + shipFee - discountAmt);
 }
 
-function selDel(el){
-  document.querySelectorAll('.del-opt').forEach(d=>d.classList.remove('on'));
+function selDel(el) {
+  document.querySelectorAll('.del-opt').forEach(d => d.classList.remove('on'));
   el.classList.add('on');
-  shipFee=el.querySelector('.del-opt-desc').textContent.includes('Үнэгүй')?0:5000;
-  document.getElementById('coShip').textContent=fmt(shipFee);
+  shipFee = el.querySelector('.del-opt-desc').textContent.includes('Үнэгүй') ? 0 : 5000;
   updateCheckoutTotals();
 }
 
-function selPay(el,fee){
-  document.querySelectorAll('.pay-opt').forEach(p=>p.classList.remove('on'));
+function selPay(el) {
+  document.querySelectorAll('.pay-opt').forEach(p => p.classList.remove('on'));
   el.classList.add('on');
-  const isQpay=el.querySelector('.pay-opt-icon').textContent==='📱';
-  document.getElementById('qpayBox').style.display=isQpay?'block':'none';
-  updateCheckoutTotals();
+  const isQpay = el.querySelector('.pay-opt-icon').textContent === '📱';
+  document.getElementById('qpayBox').style.display = isQpay ? 'block' : 'none';
 }
 
-function applyCoupon(){
-  const c=document.getElementById('cupInput').value.toUpperCase().trim();
-  const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const disc=c==='BREW15'?0.15:c==='COFFEE20'?0.20:c==='BARISTA10'?0.10:0;
-  if(!disc){toast('Код буруу байна!','err');return}
-  discountAmt=Math.round(sub*disc);
-  document.getElementById('discAmt').textContent='-'+fmt(discountAmt);
-  document.getElementById('discRow').style.display='flex';
+function applyCoupon() {
+  const c = document.getElementById('cupInput').value.toUpperCase().trim();
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const codes = { 'BREW15': 0.15, 'COFFEE20': 0.20, 'BARISTA10': 0.10 };
+  const disc = codes[c] || 0;
+  if (!disc) { toast('Код буруу байна!', 'err'); return; }
+  discountAmt = Math.round(sub * disc);
+  document.getElementById('discAmt').textContent = '-' + fmt(discountAmt);
+  document.getElementById('discRow').style.display = 'flex';
   updateCheckoutTotals();
-  toast(`🎉 ${c}: ${Math.round(disc*100)}% хямдрал авлаа`,'success');
+  toast(`🎉 ${c}: ${Math.round(disc * 100)}% хямдрал авлаа`, 'success');
 }
 
-function validateCheckout(){
-  const fields=[
-    {id:'coLastName',label:'Овог'},
-    {id:'coFirstName',label:'Нэр'},
-    {id:'coPhone',label:'Утас'},
-    {id:'coEmail',label:'И-мэйл'},
-    {id:'coAddr',label:'Хаяг'},
+function validateCheckout() {
+  const fields = [
+    { id: 'coLastName', label: 'Овог' },
+    { id: 'coFirstName', label: 'Нэр' },
+    { id: 'coPhone', label: 'Утас' },
+    { id: 'coEmail', label: 'И-мэйл' },
+    { id: 'coAddr', label: 'Хаяг' },
   ];
-  let valid=true;
-  document.querySelectorAll('.input-error').forEach(el=>el.classList.remove('input-error'));
-  document.querySelectorAll('.error-msg').forEach(el=>el.remove());
-  for(const f of fields){
-    const el=document.getElementById(f.id);
-    if(!el||!el.value.trim()){
+  let valid = true;
+  document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+  document.querySelectorAll('.error-msg').forEach(el => el.remove());
+  for (const f of fields) {
+    const el = document.getElementById(f.id);
+    if (!el || !el.value.trim()) {
       el.classList.add('input-error');
-      const err=document.createElement('div');
-      err.className='error-msg';
-      err.textContent=f.label+' оруулна уу';
+      const err = document.createElement('div');
+      err.className = 'error-msg';
+      err.textContent = f.label + ' оруулна уу';
       el.parentNode.appendChild(err);
-      valid=false;
+      valid = false;
     }
   }
-  if(!valid){toast('Бүх талбарыг бөглөнө үү','err');}
+  if (!valid) toast('Бүх талбарыг бөглөнө үү', 'err');
   return valid;
 }
 
-function placeOrder(){
-  if(!cart.length){toast('Сагс хоосон байна!','err');return}
-  if(!validateCheckout())return;
-  cart=[];updBadge();
+async function placeOrder() {
+  if (!cart.length) { toast('Сагс хоосон байна!', 'err'); return; }
+  if (!validateCheckout()) return;
+
+  const sub = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = sub + shipFee - discountAmt;
+
+  // Нэвтэрсэн бол Supabase-д захиалга хадгалах
+  if (currentUser) {
+    try {
+      const { error } = await sb.from('orders').insert({
+        user_id: currentUser.id,
+        total_price: total,
+        items: cart.map(c => ({ id: c.id, name: c.name, qty: c.qty, price: c.price })),
+        status: 'pending',
+        created_at: new Date().toISOString()
+      });
+      if (error) console.warn('Захиалга хадгалахад алдаа:', error);
+    } catch (e) {
+      console.warn('Order insert error:', e);
+    }
+  }
+
+  cart = [];
+  updBadge();
   nav('tracking');
-  setTimeout(()=>{document.getElementById('trackQ').value='BM-2024-001';doTrack()},200);
-  toast('🎉 Захиалга амжилттай! Баярлалаа!','success');
-}
-
-function renderWish(){
-  const g=document.getElementById('wishGrid');
-  const e=document.getElementById('wishEmpty');
-  if(!g)return;
-  const wps=P.filter(p=>wish.includes(p.id));
-  if(!wps.length){g.style.display='none';e.style.display='block'}
-  else{g.style.display='grid';e.style.display='none';g.innerHTML=wps.map(pCard).join('')}
+  setTimeout(() => { document.getElementById('trackQ').value = 'BM-2024-001'; doTrack(); }, 200);
+  toast('🎉 Захиалга амжилттай! Баярлалаа!', 'success');
 }
 
 // ─────────────────────────────────────────────
-// AUTH
+// WISHLIST
 // ─────────────────────────────────────────────
-function renderAuth(mode){
-  const el=document.getElementById('authContent');
-  if(currentUser){
-    el.innerHTML=`<div class="auth-success">
-      <span class="auth-success-icon">☕</span>
-      <h3>Тавтай морилно уу!</h3>
-      <p style="margin-bottom:20px">${currentUser.email}</p>
-      <button class="btn-checkout" onclick="nav('profile')">Профайл харах</button>
-      <div style="margin-top:12px;text-align:center">
-        <span style="font-size:13px;color:var(--ca);cursor:pointer;font-weight:500" onclick="logout()">Гарах</span>
-      </div>
-    </div>`;
-    return;
-  }
-  if(mode==='login'){
-    el.innerHTML=`<div class="auth-tabs">
-      <button class="auth-tab active" onclick="renderAuth('login')">Нэвтрэх</button>
-      <button class="auth-tab" onclick="renderAuth('reg')">Бүртгүүлэх</button>
-    </div>
-    <div class="auth-form" id="authForm">
-      <div class="fg"><label>И-МЭЙЛ</label><input type="email" id="loginEmail" placeholder="email@example.com" autocomplete="email"></div>
-      <div class="fg"><label>НУУЦ ҮГ</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password"></div>
-      <div style="text-align:right;margin-top:-4px"><span style="font-size:13px;color:var(--ca);cursor:pointer;font-weight:500" onclick="toast('Нууц үг сэргээх холбоос и-мэйлд илгээгдлээ','success')">Нууц үгээ мартсан уу?</span></div>
-      <button class="btn-checkout" onclick="doLogin()">Нэвтрэх</button>
-    </div>
-    <div class="auth-divider">эсвэл</div>
-    <button class="btn-facebook" onclick="doFBLogin()">
-      <span style="font-size:18px">f</span> Facebook-ээр нэвтрэх
-    </button>
-    <div class="auth-footer-link">Бүртгэлгүй юу? <a onclick="renderAuth('reg')">Бүртгүүлэх</a></div>`;
+function renderWish() {
+  const g = document.getElementById('wishGrid');
+  const e = document.getElementById('wishEmpty');
+  if (!g) return;
+  const wps = P.filter(p => wish.includes(p.id));
+  if (!wps.length) {
+    g.style.display = 'none';
+    e.style.display = 'block';
   } else {
-    el.innerHTML=`<div class="auth-tabs">
-      <button class="auth-tab" onclick="renderAuth('login')">Нэвтрэх</button>
-      <button class="auth-tab active" onclick="renderAuth('reg')">Бүртгүүлэх</button>
-    </div>
-    <div class="auth-form" id="authForm">
-      <div class="fg"><label>НЭР</label><input type="text" id="regName" placeholder="Бариста Батбаяр" autocomplete="name"></div>
-      <div class="fg"><label>УТАС</label><input type="tel" id="regPhone" placeholder="+976 9911-2233" autocomplete="tel"></div>
-      <div class="fg"><label>И-МЭЙЛ</label><input type="email" id="regEmail" placeholder="email@example.com" autocomplete="email"></div>
-      <div class="fg"><label>НУУЦ ҮГ</label><input type="password" id="regPass" placeholder="•••••••• (8+ тэмдэгт)" autocomplete="new-password"></div>
-      <div class="fg"><label>НУУЦ ҮГ ДАВТАХ</label><input type="password" id="regPass2" placeholder="••••••••" autocomplete="new-password"></div>
-      <button class="btn-checkout" onclick="doRegister()">Бүртгүүлэх →</button>
-    </div>
-    <div class="auth-divider">эсвэл</div>
-    <button class="btn-facebook" onclick="doFBLogin()">
-      <span style="font-size:18px">f</span> Facebook-ээр бүртгүүлэх
-    </button>
-    <div class="auth-footer-link">Бүртгэлтэй юу? <a onclick="renderAuth('login')">Нэвтрэх</a></div>`;
+    g.style.display = 'grid';
+    e.style.display = 'none';
+    g.innerHTML = wps.map(pCard).join('');
   }
 }
 
-function clearAuthErrors(){
-  document.querySelectorAll('#authForm .input-error').forEach(el=>el.classList.remove('input-error'));
-  document.querySelectorAll('#authForm .error-msg').forEach(el=>el.remove());
-}
+// ─────────────────────────────────────────────
+// PROFILE
+// ─────────────────────────────────────────────
+function renderProf(tab) {
+  const el = document.getElementById('profMain');
+  if (!el) return;
 
-function setFieldError(id,msg){
-  const el=document.getElementById(id);
-  if(!el)return;
-  el.classList.add('input-error');
-  const err=document.createElement('div');
-  err.className='error-msg';
-  err.textContent=msg;
-  el.parentNode.appendChild(err);
-}
-
-function doLogin(){
-  clearAuthErrors();
-  const email=document.getElementById('loginEmail')?.value.trim();
-  const pass=document.getElementById('loginPass')?.value;
-  let ok=true;
-  if(!email||!email.includes('@')){setFieldError('loginEmail','Зөв и-мэйл оруулна уу');ok=false}
-  if(!pass||pass.length<4){setFieldError('loginPass','Нууц үг оруулна уу');ok=false}
-  if(!ok)return;
-  setTimeout(()=>{
-    currentUser={name:'Батбаяр Лхагва',email:email};
-    toast('☕ Амжилттай нэвтэрлээ! Тавтай морилно уу!','success');
-    renderAuth('login');
-  },600);
-  toast('Нэвтэрч байна...','');
-}
-
-function doRegister(){
-  clearAuthErrors();
-  const name=document.getElementById('regName')?.value.trim();
-  const phone=document.getElementById('regPhone')?.value.trim();
-  const email=document.getElementById('regEmail')?.value.trim();
-  const pass=document.getElementById('regPass')?.value;
-  const pass2=document.getElementById('regPass2')?.value;
-  let ok=true;
-  if(!name){setFieldError('regName','Нэр оруулна уу');ok=false}
-  if(!phone){setFieldError('regPhone','Утас оруулна уу');ok=false}
-  if(!email||!email.includes('@')){setFieldError('regEmail','Зөв и-мэйл оруулна уу');ok=false}
-  if(!pass||pass.length<8){setFieldError('regPass','8-аас дээш тэмдэгт оруулна уу');ok=false}
-  else if(pass!==pass2){setFieldError('regPass2','Нууц үг таарахгүй байна');ok=false}
-  if(!ok)return;
-  setTimeout(()=>{
-    currentUser={name,email};
-    toast('🎉 Амжилттай бүртгүүллээ! Тавтай морилно уу!','success');
-    renderAuth('login');
-  },700);
-  toast('Бүртгэж байна...','');
-}
-
-function doFBLogin(){
-  setTimeout(()=>{
-    currentUser={name:'Facebook Хэрэглэгч',email:'fb@example.com'};
-    toast('✅ Facebook-ээр нэвтэрлээ!','success');
-    renderAuth('login');
-  },800);
-  toast('Facebook-ээр нэвтэрч байна...','');
-}
-
-function logout(){
-  currentUser=null;
-  renderAuth('login');
-  toast('Амжилттай гарлаа','success');
-}
-
-function renderProf(tab){
-  const el=document.getElementById('profMain');if(!el)return;
-  if(tab==='orders'){
-    el.innerHTML=`<div class="sec-eyebrow">Захиалгын түүх</div><h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Захиалгууд</h3>`+
-    [{id:'BM-2024-001',items:['Pomona Vanilla Syrup','Ethiopia Yirgacheffe'],total:93500,status:'shipped',date:'2024-12-01'},
-     {id:'BM-2024-002',items:['Monin Caramel Sauce 500ml'],total:45000,status:'done',date:'2024-11-20'},
-     {id:'BM-2024-003',items:['Masala Chai Blend','Butterfly Pea Flower'],total:40500,status:'pending',date:'2024-12-02'}
-    ].map(o=>`<div class="order-item"><div class="oi-top"><div><div class="oi-num">${o.id}</div><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-top:2px">${o.date}</div></div><span class="stat-pill sp-${o.status==='done'?'done':o.status}">${o.status==='shipped'?'ЯВУУЛСАН':o.status==='done'?'ХҮРГЭГДСЭН':'ХҮЛЭЭГДЭЖ БАЙНА'}</span></div><div class="oi-tags">${o.items.map(i=>`<span class="oi-tag">${i}</span>`).join('')}</div><div class="oi-bot"><span style="font-size:12px;color:var(--ct3)">Нийт дүн</span><span style="font-weight:700;font-family:'DM Serif Display',serif;font-size:18px;color:var(--ca)">${fmt(o.total)}</span></div></div>`).join('');
-  }else if(tab==='wish'){
-    el.innerHTML=`<div class="sec-eyebrow">Таалагдсан</div><h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Жагсаалт</h3>`+(wish.length?P.filter(p=>wish.includes(p.id)).map(p=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--cb3);gap:8px"><span style="font-size:14px">${p.icon} ${p.name}</span><span style="font-family:'DM Serif Display',serif;font-size:16px;color:var(--ca);flex-shrink:0">${fmt(p.price)}</span></div>`).join(''):'<p style="color:var(--ct3);font-size:14px">Таалагдсан бараа байхгүй</p>');
-  }else if(tab==='addr'){
-    el.innerHTML=`<div class="sec-eyebrow">Хаяг</div><h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Миний хаягууд</h3><div style="border:1.5px solid var(--cb3);border-radius:12px;padding:16px;margin-bottom:12px"><div style="font-weight:600;margin-bottom:4px;font-size:14px">🏠 Гэр хаяг</div><div style="font-size:13px;color:var(--ct2)">СБД-1 Хороо, 12-р байр, 45 тоот, Улаанбаатар</div><div style="font-size:12px;color:var(--ca);cursor:pointer;margin-top:10px;font-weight:500" onclick="toast('Хаяг засах функц удахгүй нэмэгдэнэ','')">Засах →</div></div><button class="btn-hero" style="font-size:13px;padding:10px 18px">+ Шинэ хаяг нэмэх</button>`;
-  }else{
-    el.innerHTML=`<div class="sec-eyebrow">Тохиргоо</div><h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Бүртгэлийн мэдээлэл</h3><div style="display:flex;flex-direction:column;gap:12px"><div class="fg"><label>НЭР</label><input type="text" value="Батбаяр Лхагва"></div><div class="fg"><label>И-МЭЙЛ</label><input type="email" value="batbayar@cuppa.mn"></div><div class="fg"><label>УТАС</label><input type="tel" value="+976 9911-2233"></div><div class="fg"><label>ШИНЭ НУУЦ ҮГ</label><input type="password" placeholder="••••••••"></div></div><button onclick="toast('Тохиргоо хадгалагдлаа ✓','success')" class="btn-checkout" style="max-width:200px;margin-top:16px">Хадгалах</button>`;
+  if (tab === 'orders') {
+    el.innerHTML = `<div class="sec-eyebrow">Захиалгын түүх</div>
+    <h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Захиалгууд</h3>` +
+    [
+      { id: 'BM-2024-001', items: ['Pomona Vanilla Syrup', 'Ethiopia Yirgacheffe'], total: 93500, status: 'shipped', date: '2024-12-01' },
+      { id: 'BM-2024-002', items: ['Monin Caramel Sauce 500ml'], total: 45000, status: 'done', date: '2024-11-20' },
+      { id: 'BM-2024-003', items: ['Masala Chai Blend', 'Butterfly Pea Flower'], total: 40500, status: 'pending', date: '2024-12-02' }
+    ].map(o =>
+      `<div class="order-item">
+        <div class="oi-top">
+          <div>
+            <div class="oi-num">${o.id}</div>
+            <div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-top:2px">${o.date}</div>
+          </div>
+          <span class="stat-pill sp-${o.status === 'done' ? 'done' : o.status === 'shipped' ? 'shipped' : 'pending'}">
+            ${o.status === 'shipped' ? 'ЯВУУЛСАН' : o.status === 'done' ? 'ХҮРГЭГДСЭН' : 'ХҮЛЭЭГДЭЖ БАЙНА'}
+          </span>
+        </div>
+        <div class="oi-tags">${o.items.map(i => `<span class="oi-tag">${i}</span>`).join('')}</div>
+        <div class="oi-bot">
+          <span style="font-size:12px;color:var(--ct3)">Нийт дүн</span>
+          <span style="font-weight:700;font-family:'DM Serif Display',serif;font-size:18px;color:var(--ca)">${fmt(o.total)}</span>
+        </div>
+      </div>`
+    ).join('');
+  } else if (tab === 'wish') {
+    el.innerHTML = `<div class="sec-eyebrow">Таалагдсан</div>
+    <h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Жагсаалт</h3>` +
+    (wish.length
+      ? P.filter(p => wish.includes(p.id)).map(p =>
+          `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--cb3);gap:8px">
+            <span style="font-size:14px">${p.icon} ${p.name}</span>
+            <span style="font-family:'DM Serif Display',serif;font-size:16px;color:var(--ca);flex-shrink:0">${fmt(p.price)}</span>
+          </div>`
+        ).join('')
+      : '<p style="color:var(--ct3);font-size:14px">Таалагдсан бараа байхгүй</p>');
+  } else if (tab === 'addr') {
+    el.innerHTML = `<div class="sec-eyebrow">Хаяг</div>
+    <h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Миний хаягууд</h3>
+    <div style="border:1.5px solid var(--cb3);border-radius:12px;padding:16px;margin-bottom:12px">
+      <div style="font-weight:600;margin-bottom:4px;font-size:14px">🏠 Гэр хаяг</div>
+      <div style="font-size:13px;color:var(--ct2)">СБД-1 Хороо, 12-р байр, 45 тоот, Улаанбаатар</div>
+      <div style="font-size:12px;color:var(--ca);cursor:pointer;margin-top:10px;font-weight:500" onclick="toast('Хаяг засах функц удахгүй нэмэгдэнэ','')">Засах →</div>
+    </div>
+    <button class="btn-hero" style="font-size:13px;padding:10px 18px">+ Шинэ хаяг нэмэх</button>`;
+  } else {
+    const email = currentUser?.email || '';
+    const name = currentUser?.user_metadata?.name || email.split('@')[0] || '';
+    el.innerHTML = `<div class="sec-eyebrow">Тохиргоо</div>
+    <h3 style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--cr);margin-bottom:16px">Бүртгэлийн мэдээлэл</h3>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="fg"><label>НЭР</label><input type="text" id="settName" value="${name}"></div>
+      <div class="fg"><label>И-МЭЙЛ</label><input type="email" value="${email}" disabled style="background:var(--cb);color:var(--ct3)"></div>
+      <div class="fg"><label>ШИНЭ НУУЦ ҮГ</label><input type="password" id="settPass" placeholder="••••••••"></div>
+    </div>
+    <button onclick="saveSettings()" class="btn-checkout" style="max-width:200px;margin-top:16px">Хадгалах</button>`;
   }
 }
 
-function switchProf(tab,el){
-  document.querySelectorAll('.prof-item').forEach(i=>i.classList.remove('on'));
-  el.classList.add('on');renderProf(tab);
+async function saveSettings() {
+  const name = document.getElementById('settName')?.value.trim();
+  const pass = document.getElementById('settPass')?.value;
+  const updates = {};
+  if (name) updates.data = { name };
+  if (pass && pass.length >= 6) updates.password = pass;
+  if (!Object.keys(updates).length) return;
+
+  const { error } = await sb.auth.updateUser(updates);
+  if (error) { toast('Алдаа: ' + error.message, 'err'); return; }
+  toast('Тохиргоо хадгалагдлаа ✓', 'success');
 }
 
-function doTrack(){
-  const q=document.getElementById('trackQ').value.trim();
-  if(!q){toast('Захиалгын дугаар оруулна уу','err');return}
-  document.getElementById('trackResult').style.display='block';
-  toast('📦 Захиалга олдлоо!','success');
+function switchProf(tab, el) {
+  document.querySelectorAll('.prof-item').forEach(i => i.classList.remove('on'));
+  el.classList.add('on');
+  renderProf(tab);
 }
 
-function cycleStar(){starCount=starCount<5?starCount+1:1;document.getElementById('starPick').textContent='⭐'.repeat(starCount)+'☆'.repeat(5-starCount)}
-function submitRev(){
-  const t=document.getElementById('revText').value.trim();
-  if(!t){toast('Сэтгэгдэл бичнэ үү','err');return}
-  document.getElementById('revText').value='';
-  toast('☕ Сэтгэгдэл илгээгдлээ! Баярлалаа','success');
+// ─────────────────────────────────────────────
+// TRACKING
+// ─────────────────────────────────────────────
+function doTrack() {
+  const q = document.getElementById('trackQ').value.trim();
+  if (!q) { toast('Захиалгын дугаар оруулна уу', 'err'); return; }
+  document.getElementById('trackResult').style.display = 'block';
+  toast('📦 Захиалга олдлоо!', 'success');
 }
 
-// Init
-renderHome();
+// ─────────────────────────────────────────────
+// REVIEWS
+// ─────────────────────────────────────────────
+function cycleStar() {
+  starCount = starCount < 5 ? starCount + 1 : 1;
+  document.getElementById('starPick').textContent = '⭐'.repeat(starCount) + '☆'.repeat(5 - starCount);
+}
+
+function submitRev() {
+  const t = document.getElementById('revText').value.trim();
+  if (!t) { toast('Сэтгэгдэл бичнэ үү', 'err'); return; }
+  document.getElementById('revText').value = '';
+  toast('☕ Сэтгэгдэл илгээгдлээ! Баярлалаа', 'success');
+}
+
+// ─────────────────────────────────────────────
+// INIT RENDER
+// ─────────────────────────────────────────────
 updBadge();
-document.getElementById('bnBadge').style.display='none';
 </script>
 </body>
 </html>
