@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>CUPPA — Coffee Supply</title>
+<title>CUPPA  </title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -477,7 +477,6 @@ input:focus,select:focus{border-color:var(--ca)}
       <p class="hero-sub">Сироп, соус, smoothie, кофе болон бариста бүтээгдэхүүнийг нэг дороос захиалаарай.</p>
       <div class="hero-btns">
         <button class="btn-hero" onclick="nav('catalog')">Дэлгүүр үзэх →</button>
-        <button class="btn-hero-ghost" onclick="filterCat('Кофе')">☕ Кофе</button>
       </div>
       <div class="hero-stats">
         <div class="hero-stat"><div class="hero-stat-val">200+</div><div class="hero-stat-lbl">БҮТЭЭГДЭХҮҮН</div></div>
@@ -991,7 +990,7 @@ function updateAuthUI() {
   if (currentUser) {
     const email = currentUser.email || '';
     const initials = email.charAt(0).toUpperCase();
-    if (navBtn) navBtn.textContent = '👤 Профайл';
+    if (navBtn) navBtn.textContent = 'Профайл';
     if (mmBtn) mmBtn.querySelector('span').textContent = 'Профайл';
     if (bnItem) bnItem.querySelector('.bn-label').textContent = 'Профайл';
 
