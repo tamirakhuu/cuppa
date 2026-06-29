@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUPPA Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cr:#2C1810;--crl:#4A2C1A;
+  --ca:#C8891A;--cal:#F0B849;
+  --cb:#F4F6F9;--cw:#ffffff;
+  --ct:#1a1a2e;--ct2:#64748b;--ct3:#94a3b8;
+  --border:#e2e8f0;
+  --sidebar:220px;
+  --purple:#7C3AED;--purple-light:#EDE9FE;
+  --green:#059669;--green-light:#D1FAE5;
+  --blue:#2563EB;--blue-light:#DBEAFE;
+  --orange:#EA580C;--orange-light:#FFEDD5;
+  --red:#DC2626;--red-light:#FEE2E2;
+  --radius:10px;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-md:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.05);
+}
+body{font-family:'Inter',sans-serif;background:var(--cb);color:var(--ct);display:flex;min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);background:var(--cw);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .25s}
+.sidebar-logo{padding:18px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-bean{width:32px;height:32px;background:var(--cr);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+.logo-text{font-size:15px;font-weight:700;color:var(--cr);letter-spacing:-.3px}
+.logo-sub{font-size:9px;color:var(--ct3);font-family:'Space Mono',monospace;letter-spacing:.5px}
+.sidebar-body{flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:none}
+.sidebar-body::-webkit-scrollbar{display:none}
+.nav-group{margin-bottom:4px}
+.nav-group-label{font-size:9px;font-weight:600;color:var(--ct3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 10px 4px;font-family:'Space Mono',monospace}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;color:var(--ct2);font-size:13px;font-weight:500;transition:all .15s;position:relative;border:none;background:none;width:100%;text-align:left;text-decoration:none}
+.nav-item:hover{background:#f8fafc;color:var(--ct)}
+.nav-item.active{background:var(--purple-light);color:var(--purple);font-weight:600}
+.nav-item.active .nav-icon{color:var(--purple)}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--purple);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;font-family:'Space Mono',monospace}
+.nav-badge.green{background:var(--green)}
+.nav-badge.orange{background:var(--orange)}
+.sidebar-foot{padding:12px 8px;border-top:1px solid var(--border)}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:var(--sidebar);right:0;height:58px;background:var(--cw);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:99}
+.topbar-title{font-size:16px;font-weight:600;color:var(--ct);flex:1}
+.topbar-search{display:flex;align-items:center;gap:8px;background:var(--cb);border:1px solid var(--border);border-radius:8px;padding:7px 12px;width:240px}
+.topbar-search input{border:none;background:transparent;font-size:13px;color:var(--ct);outline:none;width:100%;font-family:'Inter',sans-serif}
+.topbar-search input::placeholder{color:var(--ct3)}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.tb-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--cw);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;color:var(--ct2)}
+.tb-btn:hover{background:var(--cb)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1.5px solid var(--cw)}
+.tb-avatar{width:36px;height:36px;border-radius:8px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;cursor:pointer}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar);margin-top:58px;flex:1;padding:24px;min-height:calc(100vh - 58px)}
+
+/* ── PAGES ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--cw);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--sh)}
+.card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-title{font-size:14px;font-weight:600;color:var(--ct)}
+.card-body{padding:20px}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:1200px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat-card{background:var(--cw);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--sh);position:relative;overflow:hidden}
+.stat-card::after{content:'';position:absolute;right:-20px;top:-20px;width:80px;height:80px;border-radius:50%;opacity:.06}
+.stat-card.purple::after{background:var(--purple)}
+.stat-card.green::after{background:var(--green)}
+.stat-card.orange::after{background:var(--orange)}
+.stat-card.blue::after{background:var(--blue)}
+.stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.stat-icon.purple{background:var(--purple-light)}
+.stat-icon.green{background:var(--green-light)}
+.stat-icon.orange{background:var(--orange-light)}
+.stat-icon.blue{background:var(--blue-light)}
+.stat-val{font-size:26px;font-weight:700;color:var(--ct);letter-spacing:-.5px;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--ct3);margin-bottom:8px}
+.stat-change{font-size:11px;font-weight:600;display:flex;align-items:center;gap:3px}
+.stat-change.up{color:var(--green)}
+.stat-change.down{color:var(--red)}
+
+/* ── TABLES ── */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;font-weight:600;color:var(--ct3);padding:10px 16px;border-bottom:1px solid var(--border);letter-spacing:.5px;text-transform:uppercase;font-family:'Space Mono',monospace;white-space:nowrap}
+td{padding:13px 16px;border-bottom:1px solid #f8fafc;font-size:13px;color:var(--ct);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.td-img{width:40px;height:40px;border-radius:8px;object-fit:cover;background:var(--cb);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.td-name{font-weight:600;color:var(--ct);margin-bottom:2px;font-size:13px}
+.td-sub{font-size:11px;color:var(--ct3)}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;font-family:'Space Mono',monospace;white-space:nowrap}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
+.badge.pending{background:#FFF3CD;color:#92600A}
+.badge.processing{background:var(--blue-light);color:#1D4ED8}
+.badge.shipped{background:#DBEAFE;color:#1E40AF}
+.badge.done{background:var(--green-light);color:#065F46}
+.badge.cancelled{background:var(--red-light);color:#991B1B}
+.badge.active{background:var(--green-light);color:#065F46}
+.badge.inactive{background:#F1F5F9;color:var(--ct2)}
+.badge.new{background:var(--purple-light);color:#5B21B6}
+.badge.hot{background:var(--orange-light);color:#9A3412}
+.badge.sale{background:var(--green-light);color:#065F46}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .15s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-primary:hover{background:#6D28D9}
+.btn-coffee{background:var(--cr);color:#fff}
+.btn-coffee:hover{background:var(--crl)}
+.btn-outline{background:var(--cw);color:var(--ct);border:1px solid var(--border)}
+.btn-outline:hover{background:var(--cb)}
+.btn-danger{background:var(--red-light);color:var(--red)}
+.btn-danger:hover{background:#FECACA}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn-icon{width:32px;height:32px;padding:0;justify-content:center;border-radius:7px}
+
+/* ── FORMS ── */
+.form-grid{display:grid;gap:14px}
+.form-grid-2{grid-template-columns:1fr 1fr}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:11px;font-weight:600;color:var(--ct2);letter-spacing:.5px;text-transform:uppercase;font-family:'Space Mono',monospace}
+.fg input,.fg select,.fg textarea{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--ct);background:var(--cw);outline:none;font-family:'Inter',sans-serif;transition:border-color .15s;-webkit-appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--purple)}
+.fg textarea{resize:vertical;min-height:80px}
+.input-prefix{position:relative}
+.input-prefix input{padding-left:32px}
+.input-prefix-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ct3);font-size:13px}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;backdrop-filter:blur(3px)}
+.modal-bg.open{display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:var(--cw);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:16px;font-weight:700;color:var(--ct)}
+.modal-close{width:32px;height:32px;border-radius:7px;background:var(--cb);border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--ct2)}
+.modal-body{padding:24px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* ── TOAST ── */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{background:#1e293b;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;transform:translateX(20px);opacity:0;transition:all .3s;min-width:260px}
+.toast.show{transform:translateX(0);opacity:1}
+.toast.success{border-left:3px solid var(--green)}
+.toast.err{border-left:3px solid var(--red)}
+.toast.info{border-left:3px solid var(--purple)}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:64px 24px;color:var(--ct3)}
+.empty-state .es-icon{font-size:52px;display:block;margin-bottom:14px;opacity:.5}
+.empty-state h3{font-size:16px;font-weight:600;color:var(--ct2);margin-bottom:6px}
+.empty-state p{font-size:13px;margin-bottom:20px;line-height:1.6}
+
+/* ── CHART BARS ── */
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:120px}
+.chart-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.chart-bar{width:100%;border-radius:6px 6px 0 0;transition:height .6s cubic-bezier(.4,0,.2,1)}
+.chart-label{font-size:9px;color:var(--ct3);font-family:'Space Mono',monospace}
+.chart-legend{display:flex;align-items:center;gap:16px;margin-top:12px;flex-wrap:wrap}
+.cl-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ct2)}
+.cl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+
+/* ── MINI CHART ── */
+.sparkline{display:flex;align-items:flex-end;gap:2px;height:36px}
+.sp-bar{width:6px;border-radius:2px 2px 0 0}
+
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.page-header h1{font-size:20px;font-weight:700;color:var(--ct);letter-spacing:-.3px}
+.page-header p{font-size:13px;color:var(--ct3);margin-top:2px}
+
+/* ── TABS ── */
+.tabs{display:flex;gap:2px;background:var(--cb);border-radius:8px;padding:3px;margin-bottom:20px}
+.tab{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;color:var(--ct2);border:none;background:transparent;font-family:'Inter',sans-serif;transition:all .15s}
+.tab.active{background:var(--cw);color:var(--ct);font-weight:600;box-shadow:var(--sh)}
+
+/* ── SEARCH BAR ── */
+.search-bar{display:flex;align-items:center;gap:8px;background:var(--cb);border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;flex:1;max-width:320px;transition:border-color .15s}
+.search-bar:focus-within{border-color:var(--purple)}
+.search-bar input{border:none;background:transparent;font-size:13px;color:var(--ct);outline:none;flex:1;font-family:'Inter',sans-serif}
+.search-bar input::placeholder{color:var(--ct3)}
+
+/* ── TOOLBAR ── */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+
+/* ── AVATAR ── */
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+/* ── PROGRESS ── */
+.progress{height:6px;background:var(--cb);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;transition:width .6s}
+
+/* ── MISC ── */
+.divider{height:1px;background:var(--border);margin:16px 0}
+.text-right{text-align:right}
+.text-center{text-align:center}
+.flex{display:flex}
+.flex-col{flex-direction:column}
+.items-center{align-items:center}
+.justify-between{justify-content:space-between}
+.gap-8{gap:8px}
+.gap-12{gap:12px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.mt-16{margin-top:16px}
+.mb-16{margin-bottom:16px}
+
+/* ── HAMBURGER ── */
+.hamburger{display:none;position:fixed;top:14px;left:16px;z-index:200;background:var(--cw);border:1px solid var(--border);border-radius:8px;width:36px;height:36px;cursor:pointer;align-items:center;justify-content:center;font-size:18px}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .topbar{left:0}
+  .hamburger{display:flex}
+  .sidebar-overlay{display:block}
+}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+
+/* ── PRODUCT IMG ── */
+.prod-thumb{width:42px;height:42px;border-radius:8px;object-fit:cover;background:var(--cb);border:1px solid var(--border)}
+.prod-thumb-emoji{width:42px;height:42px;border-radius:8px;background:var(--cb);display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid var(--border)}
+
+/* Upload zone */
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:border-color .2s}
+.upload-zone:hover{border-color:var(--purple)}
+.upload-zone-icon{font-size:36px;margin-bottom:10px;display:block}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- HAMBURGER -->
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalBox">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">–</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-bean">☕</div>
+    <div>
+      <div class="logo-text">CUPPA</div>
+      <div class="logo-sub">ADMIN PANEL</div>
+    </div>
+  </div>
+  <div class="sidebar-body">
+    <div class="nav-group">
+      <a class="nav-item active" onclick="navTo('dashboard')">
+        <span class="nav-icon">📊</span> Нүүр хуудас
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Дэлгүүр</div>
+      <a class="nav-item" onclick="navTo('products')">
+        <span class="nav-icon">📦</span> Бүтээгдэхүүн
+        <span class="nav-badge" id="nb-products">0</span>
+      </a>
+      <a class="nav-item" onclick="navTo('orders')">
+        <span class="nav-icon">🧾</span> Захиалгууд
+        <span class="nav-badge orange" id="nb-orders">0</span>
+      </a>
+      <a class="nav-item" onclick="navTo('categories')">
+        <span class="nav-icon">🏷️</span> Ангилал
+      </a>
+      <a class="nav-item" onclick="navTo('inventory')">
+        <span class="nav-icon">🗄️</span> Агуулах
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Хэрэглэгч</div>
+      <a class="nav-item" onclick="navTo('customers')">
+        <span class="nav-icon">👥</span> Хэрэглэгчид
+        <span class="nav-badge green" id="nb-customers">0</span>
+      </a>
+      <a class="nav-item" onclick="navTo('reviews')">
+        <span class="nav-icon">⭐</span> Сэтгэгдэл
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Санхүү</div>
+      <a class="nav-item" onclick="navTo('finance')">
+        <span class="nav-icon">💰</span> Орлого
+      </a>
+      <a class="nav-item" onclick="navTo('coupons')">
+        <span class="nav-icon">🎟️</span> Купон
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Тохиргоо</div>
+      <a class="nav-item" onclick="navTo('settings')">
+        <span class="nav-icon">⚙️</span> Тохиргоо
+      </a>
+      <a class="nav-item" onclick="navTo('delivery')">
+        <span class="nav-icon">🚚</span> Хүргэлт
+      </a>
+      <a class="nav-item" onclick="navTo('banners')">
+        <span class="nav-icon">🖼️</span> Баннер
+      </a>
+    </div>
+  </div>
+  <div class="sidebar-foot">
+    <div class="nav-item" onclick="toast('Та системээс гарлаа','info')">
+      <span class="nav-icon">🚪</span> Гарах
+    </div>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-title" id="topbarTitle">Нүүр хуудас</div>
+  <div class="topbar-search">
+    <span style="color:var(--ct3);font-size:13px">🔍</span>
+    <input type="text" placeholder="Хайх..." id="globalSearch">
+  </div>
+  <div class="topbar-actions">
+    <a href="coffeetree.vercel.app" target="_blank" class="btn btn-outline btn-sm">🌐 Вэбсайт</a>
+    <button class="tb-btn" onclick="toast('3 шинэ мэдэгдэл байна','info')">
+      🔔<div class="notif-dot"></div>
+    </button>
+    <button class="tb-btn" onclick="toast('Тусламж удахгүй нэмэгдэнэ','info')">❓</button>
+    <div class="tb-avatar" onclick="navTo('settings')">А</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-header">
+      <div>
+        <h1>Нүүр хуудас</h1>
+        <p>Өнөөдрийн дүн мэдээ — 2026 оны 1-р сар</p>
+      </div>
+      <button class="btn btn-coffee" onclick="toast('Тайлан татаж байна...','info')">📥 Тайлан татах</button>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="stat-grid">
+      <div class="stat-card purple">
+        <div class="stat-icon purple">💰</div>
+        <div class="stat-val">₮8.4M</div>
+        <div class="stat-label">Энэ сарын орлого</div>
+        <div class="stat-change up">↑ 12.4% өнгөрсөн сараас</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-icon green">🧾</div>
+        <div class="stat-val">342</div>
+        <div class="stat-label">Нийт захиалга</div>
+        <div class="stat-change up">↑ 8.1% өнгөрсөн сараас</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-icon orange">👥</div>
+        <div class="stat-val">1,284</div>
+        <div class="stat-label">Идэвхтэй хэрэглэгч</div>
+        <div class="stat-change up">↑ 5.3% өнгөрсөн сараас</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-icon blue">📦</div>
+        <div class="stat-val">187</div>
+        <div class="stat-label">Бүтээгдэхүүн</div>
+        <div class="stat-change down">↓ 3 нөөц бага</div>
+      </div>
+    </div>
+
+    <!-- CHARTS + RECENT -->
+    <div class="grid-2" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Орлогын график</div>
+          <select style="border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;color:var(--ct2);outline:none;cursor:pointer">
+            <option>7 хоног</option><option>30 хоног</option><option>3 сар</option>
+          </select>
+        </div>
+        <div class="card-body">
+          <div class="chart-bar-wrap" id="revenueChart"></div>
+          <div class="chart-legend">
+            <div class="cl-item"><div class="cl-dot" style="background:var(--purple)"></div>Орлого</div>
+            <div class="cl-item"><div class="cl-dot" style="background:var(--green)"></div>Захиалга</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Ангилалын борлуулалт</div>
+        </div>
+        <div class="card-body" id="catChart"></div>
+      </div>
+    </div>
+
+    <!-- RECENT ORDERS + LOW STOCK -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Сүүлийн захиалгууд</div>
+          <button class="btn btn-outline btn-sm" onclick="navTo('orders')">Бүгдийг харах</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>№</th><th>Хэрэглэгч</th><th>Дүн</th><th>Төлөв</th></tr></thead>
+            <tbody id="recentOrders"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">⚠️ Нөөц багатай</div>
+          <button class="btn btn-outline btn-sm" onclick="navTo('inventory')">Агуулах</button>
+        </div>
+        <div class="card-body" id="lowStockList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRODUCTS ── -->
+  <div class="page" id="page-products">
+    <div class="page-header">
+      <div><h1>Бүтээгдэхүүн</h1><p id="prodCountLabel">Нийт 0 бараа</p></div>
+      <button class="btn btn-primary" onclick="openAddProduct()">➕ Бараа нэмэх</button>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="toolbar" style="margin-bottom:0;flex:1">
+          <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" placeholder="Бараа хайх..." onkeyup="filterProducts(this.value)">
+          </div>
+          <select id="catFilter" onchange="filterProducts()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;color:var(--ct);outline:none;cursor:pointer">
+            <option value="">Бүх ангилал</option>
+          </select>
+          <select id="stockFilter" onchange="filterProducts()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;color:var(--ct);outline:none;cursor:pointer">
+            <option value="">Бүх нөөц</option>
+            <option value="low">Нөөц бага</option>
+            <option value="out">Дууссан</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Бараа</th><th>Ангилал</th><th>Үнэ</th><th>Нөөц</th><th>Төлөв</th><th>Үйлдэл</th></tr></thead>
+          <tbody id="productTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ORDERS ── -->
+  <div class="page" id="page-orders">
+    <div class="page-header">
+      <div><h1>Захиалгууд</h1><p>Нийт захиалга удирдах</p></div>
+      <button class="btn btn-outline" onclick="toast('CSV татаж байна...','info')">📥 Экспорт</button>
+    </div>
+    <div class="tabs" id="orderTabs">
+      <button class="tab active" onclick="filterOrders('all',this)">Бүгд</button>
+      <button class="tab" onclick="filterOrders('pending',this)">Хүлээгдэж байна</button>
+      <button class="tab" onclick="filterOrders('processing',this)">Боловсруулж байна</button>
+      <button class="tab" onclick="filterOrders('shipped',this)">Явуулсан</button>
+      <button class="tab" onclick="filterOrders('done',this)">Хүргэгдсэн</button>
+      <button class="tab" onclick="filterOrders('cancelled',this)">Цуцлагдсан</button>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Захиалгын дугаар, нэр..." onkeyup="searchOrders(this.value)">
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Захиалга №</th><th>Хэрэглэгч</th><th>Бараанууд</th><th>Нийт дүн</th><th>Хүргэлт</th><th>Огноо</th><th>Төлөв</th><th>Үйлдэл</th></tr></thead>
+          <tbody id="orderTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CATEGORIES ── -->
+  <div class="page" id="page-categories">
+    <div class="page-header">
+      <div><h1>Ангилал</h1><p>Бүтээгдэхүүний ангилал удирдах</p></div>
+      <button class="btn btn-primary" onclick="openAddCategory()">➕ Ангилал нэмэх</button>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Ангилалын жагсаалт</div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ангилал</th><th>Бараа тоо</th><th>Үйлдэл</th></tr></thead>
+            <tbody id="categoryTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Ангилал нэмэх</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="fg"><label>Ангиллын нэр (МН)</label><input type="text" id="newCatName" placeholder="жн: Сироп"></div>
+            <div class="fg"><label>Тэмдэгт (Emoji)</label><input type="text" id="newCatIcon" placeholder="🍯"></div>
+            <div class="fg"><label>Тайлбар</label><textarea id="newCatDesc" placeholder="Ангиллын тайлбар..."></textarea></div>
+          </div>
+          <button class="btn btn-primary mt-16" onclick="addCategory()">Хадгалах</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INVENTORY ── -->
+  <div class="page" id="page-inventory">
+    <div class="page-header">
+      <div><h1>Агуулах</h1><p>Нөөц, үлдэгдэл удирдах</p></div>
+    </div>
+    <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="stat-card green"><div class="stat-icon green">✅</div><div class="stat-val" id="inv-ok">0</div><div class="stat-label">Бэлэн нөөц</div></div>
+      <div class="stat-card orange"><div class="stat-icon orange">⚠️</div><div class="stat-val" id="inv-low">0</div><div class="stat-label">Нөөц бага (10-аас доош)</div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:var(--red-light)">❌</div><div class="stat-val" id="inv-out">0</div><div class="stat-label">Дууссан</div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">Нөөцийн жагсаалт</div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Бараа</th><th>Ангилал</th><th>Үнэ</th><th>Нөөц</th><th>Байдал</th><th>Нөөц нэмэх</th></tr></thead>
+          <tbody id="inventoryTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CUSTOMERS ── -->
+  <div class="page" id="page-customers">
+    <div class="page-header">
+      <div><h1>Хэрэглэгчид</h1><p id="custCountLabel">Нийт 0 хэрэглэгч</p></div>
+    </div>
+    <div class="card">
+      <div class="card-head">
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Нэр, и-мэйл..." onkeyup="searchCustomers(this.value)">
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Хэрэглэгч</th><th>И-мэйл</th><th>Захиалга</th><th>Нийт зарцуулсан</th><th>Бүртгэгдсэн</th><th>Төлөв</th></tr></thead>
+          <tbody id="customerTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REVIEWS ── -->
+  <div class="page" id="page-reviews">
+    <div class="page-header"><h1>Сэтгэгдэл</h1></div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">Хэрэглэгчдийн үнэлгээ</div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Хэрэглэгч</th><th>Бараа</th><th>Үнэлгээ</th><th>Сэтгэгдэл</th><th>Огноо</th><th>Үйлдэл</th></tr></thead>
+          <tbody id="reviewTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FINANCE ── -->
+  <div class="page" id="page-finance">
+    <div class="page-header"><h1>Орлого</h1></div>
+    <div class="stat-grid">
+      <div class="stat-card purple"><div class="stat-icon purple">📈</div><div class="stat-val">₮8.4M</div><div class="stat-label">Энэ сарын орлого</div><div class="stat-change up">↑ 12.4%</div></div>
+      <div class="stat-card green"><div class="stat-icon green">✅</div><div class="stat-val">₮67.2M</div><div class="stat-label">Жилийн нийт орлого</div><div class="stat-change up">↑ 24.1%</div></div>
+      <div class="stat-card orange"><div class="stat-icon orange">⏳</div><div class="stat-val">₮1.2M</div><div class="stat-label">Хүлээгдэж буй төлбөр</div></div>
+      <div class="stat-card blue"><div class="stat-icon blue">🔄</div><div class="stat-val">₮320K</div><div class="stat-label">Буцаан олголт</div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><div class="card-title">Орлогын дэлгэрэнгүй</div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Сар</th><th>Захиалга</th><th>Орлого</th><th>Буцаалт</th><th>Цэвэр орлого</th></tr></thead>
+          <tbody>
+            ${[
+              ['2025-08','289','₮6.1M','₮120K','₮5.98M'],
+              ['2025-09','301','₮6.8M','₮145K','₮6.66M'],
+              ['2025-10','318','₮7.2M','₮210K','₮6.99M'],
+              ['2025-11','330','₮7.8M','₮180K','₮7.62M'],
+              ['2025-12','342','₮8.1M','₮200K','₮7.90M'],
+              ['2026-01','342','₮8.4M','₮320K','₮8.08M'],
+            ].map(r=>`<tr><td><span style="font-family:'Space Mono',monospace;font-size:12px">${r[0]}</span></td><td>${r[1]}</td><td style="font-weight:600;color:var(--purple)">${r[2]}</td><td style="color:var(--red)">${r[3]}</td><td style="font-weight:700">${r[4]}</td></tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COUPONS ── -->
+  <div class="page" id="page-coupons">
+    <div class="page-header">
+      <div><h1>Купон</h1></div>
+      <button class="btn btn-primary" onclick="openAddCoupon()">➕ Купон нэмэх</button>
+    </div>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Код</th><th>Хөнгөлөлт</th><th>Хэрэглэсэн</th><th>Хязгаар</th><th>Дуусах огноо</th><th>Төлөв</th><th>Үйлдэл</th></tr></thead>
+          <tbody id="couponTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BANNERS ── -->
+  <div class="page" id="page-banners">
+    <div class="page-header">
+      <div><h1>Баннер</h1></div>
+      <button class="btn btn-primary">➕ Баннер нэмэх</button>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Одоогийн баннерууд</div></div>
+        <div class="card-body" id="bannerList"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Шинэ баннер</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="fg full"><label>Гарчиг</label><input type="text" placeholder="Баннерын гарчиг..."></div>
+            <div class="fg full"><label>Тайлбар</label><input type="text" placeholder="Дэд гарчиг..."></div>
+            <div class="fg full">
+              <div class="upload-zone" onclick="toast('Зураг оруулах функц удахгүй','info')">
+                <span class="upload-zone-icon">🖼️</span>
+                <div style="font-size:13px;font-weight:600;color:var(--ct2)">Зураг оруулах</div>
+                <div style="font-size:12px;color:var(--ct3);margin-top:4px">JPG, PNG · Макс 5MB</div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary mt-16" onclick="toast('Баннер хадгалагдлаа','success')">Хадгалах</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DELIVERY ── -->
+  <div class="page" id="page-delivery">
+    <div class="page-header"><h1>Хүргэлтийн тохиргоо</h1></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Хүргэлтийн зон</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="fg"><label>Улаанбаатар хотын доторх</label><input type="number" value="5000" placeholder="₮"></div>
+            <div class="fg"><label>Аймаг</label><input type="number" value="15000" placeholder="₮"></div>
+            <div class="fg"><label>Үнэгүй хүргэлтийн доод дүн</label><input type="number" value="100000" placeholder="₮"></div>
+            <div class="fg"><label>Очиж авах</label><input type="number" value="0" placeholder="₮"></div>
+          </div>
+          <button class="btn btn-primary mt-16" onclick="toast('Хүргэлтийн тохиргоо хадгалагдлаа','success')">Хадгалах</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Хүргэлтийн цаг</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="fg"><label>Эхлэх цаг</label><input type="time" value="09:00"></div>
+            <div class="fg"><label>Дуусах цаг</label><input type="time" value="19:00"></div>
+            <div class="fg full"><label>Хаагдсан өдрүүд</label><input type="text" value="Нийтийн баяр" placeholder=""></div>
+          </div>
+          <button class="btn btn-primary mt-16" onclick="toast('Цагийн тохиргоо хадгалагдлаа','success')">Хадгалах</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS ── -->
+  <div class="page" id="page-settings">
+    <div class="page-header"><h1>Тохиргоо</h1></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-head"><div class="card-title">Дэлгүүрийн мэдээлэл</div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="fg full"><label>Дэлгүүрийн нэр</label><input type="text" value="CUPPA Coffee Supply"></div>
+            <div class="fg"><label>Утас</label><input type="tel" value="+976 77111772"></div>
+            <div class="fg"><label>И-мэйл</label><input type="email" value="coffeetree2017@gmail.com"></div>
+            <div class="fg full"><label>Хаяг</label><input type="text" value="Нарны зам, Саруул маркет, 2 давхар, СБД-1"></div>
+            <div class="fg"><label>Нэвтрэх нэр</label><input type="text" value="admin@cuppa.mn"></div>
+            <div class="fg"><label>Нууц үг</label><input type="password" placeholder="Шинэ нууц үг..."></div>
+          </div>
+          <button class="btn btn-primary mt-16" onclick="toast('Тохиргоо хадгалагдлаа ✓','success')">Хадгалах</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Суваг холболт</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--border);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">📱</span><div><div style="font-weight:600;font-size:13px">QPay</div><div style="font-size:11px;color:var(--ct3)">Холбогдсон</div></div></div>
+              <span class="badge active">Идэвхтэй</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--border);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">🏦</span><div><div style="font-weight:600;font-size:13px">Хаан банк</div><div style="font-size:11px;color:var(--ct3)">5018760137</div></div></div>
+              <span class="badge active">Идэвхтэй</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--border);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">📦</span><div><div style="font-weight:600;font-size:13px">Supabase</div><div style="font-size:11px;color:var(--ct3)">vbgqgwfcklkfecvocsyt</div></div></div>
+              <span class="badge active">Холбогдсон</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--border);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:20px">📧</span><div><div style="font-weight:600;font-size:13px">И-мэйл мэдэгдэл</div><div style="font-size:11px;color:var(--ct3)">Тохируулаагүй</div></div></div>
+              <button class="btn btn-outline btn-sm" onclick="toast('И-мэйл тохиргоо удахгүй','info')">Тохируулах</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+let products = [
+  {id:1,name:'Monin Vanilla Syrup 700ml',cat:'Сироп',price:35000,old:42000,stock:48,badge:'HOT',icon:'🍯',img:null},
+  {id:2,name:'Pomona Caramel Sauce 1L',cat:'Соус',price:28000,old:null,stock:6,badge:'HOT',icon:'🍫',img:null},
+  {id:3,name:'Bevercity Melon Smoothie',cat:'Smoothie',price:22000,old:null,stock:0,badge:'NEW',icon:'🥤',img:null},
+  {id:4,name:'Ethiopia Yirgacheffe 250g',cat:'Кофе',price:45000,old:52000,stock:23,badge:'SALE',icon:'☕',img:null},
+  {id:5,name:'Masala Chai Blend 500g',cat:'Хандалдаг цай',price:18000,old:null,stock:4,badge:'HOT',icon:'🍵',img:null},
+  {id:6,name:'Matcha Green Tea Powder',cat:'Powder',price:32000,old:38000,stock:15,badge:'NEW',icon:'🧁',img:null},
+  {id:7,name:'Origami Dripper S',cat:'Бариста хэрэгсэл',price:65000,old:null,stock:8,badge:'HOT',icon:'⚙️',img:null},
+  {id:8,name:'Reusable Straw Set 12pc',cat:'Дагалдах хэрэгсэл',price:8500,old:null,stock:0,badge:null,icon:'🧊',img:null},
+  {id:9,name:'Monin Hazelnut Syrup 700ml',cat:'Сироп',price:35000,old:null,stock:31,badge:'HOT',icon:'🍯',img:null},
+  {id:10,name:'Colombia Huila Dark Roast',cat:'Кофе',price:48000,old:null,stock:18,badge:'NEW',icon:'☕',img:null},
+];
+
+let orders = [
+  {id:'BM-2026-001',customer:'Ганболд Б.',phone:'9911-2233',addr:'СБД-1, 12-р байр',items:['Monin Vanilla Syrup','Ethiopia Yirgacheffe'],total:80000,delivery:'Хаяш',payment:'QPay',date:'2026-01-08',status:'shipped'},
+  {id:'BM-2026-002',customer:'Уянга Д.',phone:'9922-3344',addr:'БЗД-5, 8-р байр',items:['Masala Chai Blend'],total:18000,delivery:'Очиж авах',payment:'Карт',date:'2026-01-07',status:'done'},
+  {id:'BM-2026-003',customer:'Мөнхбаяр Т.',phone:'9933-4455',addr:'ХУД-3, 44-р байр',items:['Origami Dripper S','Matcha Powder'],total:97000,delivery:'Хаяш',payment:'Хаан банк',date:'2026-01-07',status:'pending'},
+  {id:'BM-2026-004',customer:'Нарантуяа С.',phone:'9944-5566',addr:'ЧД-2',items:['Bevercity Melon Smoothie x3'],total:66000,delivery:'Хаяш',payment:'QPay',date:'2026-01-06',status:'processing'},
+  {id:'BM-2026-005',customer:'Батзориг Э.',phone:'9955-6677',addr:'БГД-7, 55-р байр',items:['Colombia Huila'],total:48000,delivery:'Хаяш',payment:'Карт',date:'2026-01-05',status:'done'},
+  {id:'BM-2026-006',customer:'Энхжаргал Л.',phone:'9966-7788',addr:'СБД-8',items:['Reusable Straw Set'],total:8500,delivery:'Очиж авах',payment:'QPay',date:'2026-01-04',status:'cancelled'},
+  {id:'BM-2026-007',customer:'Дэлгэрмаа О.',phone:'9977-8899',addr:'НД-1, 3-р байр',items:['Monin Hazelnut','Pomona Sauce'],total:63000,delivery:'Хаяш',payment:'Хаан банк',date:'2026-01-03',status:'shipped'},
+];
+
+let customers = [
+  {id:1,name:'Ганболд Батбаяр',email:'ganb@gmail.com',orders:12,spent:340000,date:'2024-03-12',status:'active'},
+  {id:2,name:'Уянга Дорж',email:'uyanga@coffee.mn',orders:7,spent:182000,date:'2024-05-20',status:'active'},
+  {id:3,name:'Мөнхбаяр Тэгшбаяр',email:'munkh@gmail.com',orders:4,spent:97000,date:'2024-09-01',status:'active'},
+  {id:4,name:'Нарантуяа Сүрэн',email:'naran@mail.mn',orders:18,spent:520000,date:'2023-11-15',status:'active'},
+  {id:5,name:'Батзориг Эрдэнэ',email:'batzor@gmail.com',orders:2,spent:48000,date:'2025-01-03',status:'inactive'},
+  {id:6,name:'Энхжаргал Лхагва',email:'enkhj@mn.mn',orders:9,spent:215000,date:'2024-07-22',status:'active'},
+];
+
+let categories = [
+  {id:1,name:'Сироп',icon:'🍯',desc:'Кофе, шейк, cocktail-д ашиглах сироп'},
+  {id:2,name:'Соус',icon:'🍫',desc:'Кофе болон десерт дээр'},
+  {id:3,name:'Smoothie',icon:'🥤',desc:'Smoothie base болон mix'},
+  {id:4,name:'Кофе',icon:'☕',desc:'Single origin болон blend кофе'},
+  {id:5,name:'Хандалдаг цай',icon:'🍵',desc:'Oolong, green, herbal tea'},
+  {id:6,name:'Powder',icon:'🧁',desc:'Matcha, chocolate powder'},
+  {id:7,name:'Бариста хэрэгсэл',icon:'⚙️',desc:'Dripper, portafilter, grinder'},
+  {id:8,name:'Дагалдах хэрэгсэл',icon:'🧊',desc:'Сав, сорго, ice'},
+];
+
+let coupons = [
+  {code:'BREW15',type:'%',value:15,used:43,limit:200,expires:'2026-03-31',status:'active'},
+  {code:'COFFEE20',type:'%',value:20,used:12,limit:50,expires:'2026-02-14',status:'active'},
+  {code:'BARISTA10',type:'%',value:10,used:88,limit:null,expires:'2026-12-31',status:'active'},
+  {code:'VIP5000',type:'₮',value:5000,used:5,limit:20,expires:'2026-01-31',status:'inactive'},
+];
+
+let reviews = [
+  {user:'Ганболд Б.',product:'Monin Vanilla Syrup',rating:5,text:'Frappe-д хийхэд гайхалтай!',date:'2026-01-05'},
+  {user:'Уянга Д.',product:'Ethiopia Yirgacheffe',rating:5,text:'Хурдан хүргэж өгсөн, бараа 100% чанартай.',date:'2026-01-04'},
+  {user:'Мөнхбаяр Т.',product:'Origami Dripper',rating:4,text:'Маш сайн бараа, дахин захиалах болно.',date:'2026-01-03'},
+  {user:'Нарантуяа С.',product:'Masala Chai Blend',rating:5,text:'Цайны амт маш гоё байна!',date:'2025-12-28'},
+];
+
+let currentOrderFilter = 'all';
+
+// ──────────────────────────────────────────────
+// NAV
+// ──────────────────────────────────────────────
+const pageTitles = {
+  dashboard:'Нүүр хуудас',products:'Бүтээгдэхүүн',orders:'Захиалгууд',
+  categories:'Ангилал',inventory:'Агуулах',customers:'Хэрэглэгчид',
+  reviews:'Сэтгэгдэл',finance:'Орлого',coupons:'Купон',
+  banners:'Баннер',delivery:'Хүргэлт',settings:'Тохиргоо'
+};
+
+function navTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`)) n.classList.add('active');
+  });
+  document.getElementById('topbarTitle').textContent = pageTitles[page] || page;
+  closeSidebar();
+
+  // Render pages
+  if (page === 'dashboard') renderDashboard();
+  if (page === 'products') renderProducts();
+  if (page === 'orders') renderOrders('all');
+  if (page === 'categories') renderCategories();
+  if (page === 'inventory') renderInventory();
+  if (page === 'customers') renderCustomers();
+  if (page === 'reviews') renderReviews();
+  if (page === 'coupons') renderCoupons();
+  if (page === 'banners') renderBanners();
+}
+
+// Sidebar mobile
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').style.display = document.getElementById('sidebar').classList.contains('open') ? 'block' : 'none'; }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').style.display = 'none'; }
+
+// ──────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────
+function fmt(n) { return '₮' + Math.round(n).toLocaleString(); }
+
+function toast(msg, type='info') {
+  const w = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.textContent = msg;
+  w.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3200);
+}
+
+function openModal(title, body, foot='') {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = body;
+  document.getElementById('modalFoot').innerHTML = foot;
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeModal() { document.getElementById('modalBg').classList.remove('open'); }
+
+function statusBadge(s) {
+  const map = {pending:'pending',processing:'processing',shipped:'shipped',done:'done',cancelled:'cancelled',active:'active',inactive:'inactive',new:'new',hot:'hot',sale:'sale'};
+  const label = {pending:'Хүлээгдэж байна',processing:'Боловсруулж байна',shipped:'Явуулсан',done:'Хүргэгдсэн',cancelled:'Цуцлагдсан',active:'Идэвхтэй',inactive:'Идэвхгүй',new:'ШИНЭ',hot:'ЭРЭЛТтэй',sale:'Хямдрал'};
+  return `<span class="badge ${map[s]||''}">${label[s]||s}</span>`;
+}
+
+function stockBadge(stock) {
+  if (stock === 0) return '<span class="badge cancelled">Дууссан</span>';
+  if (stock < 10) return `<span class="badge pending">${stock} ширхэг</span>`;
+  return `<span class="badge active">${stock} ширхэг</span>`;
+}
+
+// ──────────────────────────────────────────────
+// DASHBOARD
+// ──────────────────────────────────────────────
+function renderDashboard() {
+  // Update nav badges
+  document.getElementById('nb-products').textContent = products.length;
+  document.getElementById('nb-orders').textContent = orders.filter(o => o.status === 'pending').length;
+  document.getElementById('nb-customers').textContent = customers.length;
+
+  // Revenue chart
+  const days = ['Да','Мя','Лх','Пү','Ба','Бя','Ня'];
+  const vals = [820,940,710,1080,960,1240,880];
+  const max = Math.max(...vals);
+  const rc = document.getElementById('revenueChart');
+  if (rc) rc.innerHTML = days.map((d,i) => `
+    <div class="chart-bar-col">
+      <div class="chart-bar" style="height:${Math.round(vals[i]/max*100)}%;background:${i===5?'var(--purple)':'var(--purple-light)'};min-height:4px"></div>
+      <div class="chart-label">${d}</div>
+    </div>`).join('');
+
+  // Category chart
+  const catData = [
+    {name:'Сироп',pct:34,color:'var(--purple)'},
+    {name:'Кофе',pct:28,color:'var(--green)'},
+    {name:'Соус',pct:16,color:'var(--orange)'},
+    {name:'Smoothie',pct:12,color:'var(--blue)'},
+    {name:'Бусад',pct:10,color:'var(--ct3)'},
+  ];
+  const cc = document.getElementById('catChart');
+  if (cc) cc.innerHTML = catData.map(c => `
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+        <span style="color:var(--ct2);font-weight:500">${c.name}</span>
+        <span style="font-weight:700;color:var(--ct)">${c.pct}%</span>
+      </div>
+      <div class="progress"><div class="progress-fill" style="width:${c.pct}%;background:${c.color}"></div></div>
+    </div>`).join('');
+
+  // Recent orders
+  const ro = document.getElementById('recentOrders');
+  if (ro) ro.innerHTML = orders.slice(0,5).map(o => `
+    <tr>
+      <td><span style="font-family:'Space Mono',monospace;font-size:11px;font-weight:600">${o.id}</span></td>
+      <td>${o.customer}</td>
+      <td style="font-weight:600">${fmt(o.total)}</td>
+      <td>${statusBadge(o.status)}</td>
+    </tr>`).join('');
+
+  // Low stock
+  const ls = document.getElementById('lowStockList');
+  const low = products.filter(p => p.stock < 10);
+  if (ls) ls.innerHTML = low.map(p => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;background:var(--cb);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">${p.icon}</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--ct)">${p.name.length>28?p.name.slice(0,28)+'…':p.name}</div>
+          <div style="font-size:11px;color:var(--ct3)">${p.cat}</div>
+        </div>
+      </div>
+      ${stockBadge(p.stock)}
+    </div>`).join('') || '<div style="padding:20px;text-align:center;color:var(--ct3);font-size:13px">Нөөцийн асуудал байхгүй ✅</div>';
+}
+
+// ──────────────────────────────────────────────
+// PRODUCTS
+// ──────────────────────────────────────────────
+function renderProducts(list) {
+  const data = list || products;
+  const tb = document.getElementById('productTable');
+  const lbl = document.getElementById('prodCountLabel');
+  if (lbl) lbl.textContent = `Нийт ${data.length} бараа`;
+
+  // Fill category filter
+  const cf = document.getElementById('catFilter');
+  if (cf && cf.options.length <= 1) {
+    [...new Set(products.map(p => p.cat))].forEach(c => {
+      const o = document.createElement('option'); o.value = c; o.textContent = c; cf.appendChild(o);
+    });
+  }
+
+  if (!tb) return;
+  tb.innerHTML = data.map(p => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="prod-thumb-emoji">${p.icon}</div>
+          <div>
+            <div class="td-name">${p.name}</div>
+            <div class="td-sub">${p.badge ? statusBadge(p.badge.toLowerCase()) : ''}</div>
+          </div>
+        </div>
+      </td>
+      <td><span style="font-size:12px;color:var(--ct2)">${p.cat}</span></td>
+      <td>
+        <div style="font-weight:700">${fmt(p.price)}</div>
+        ${p.old ? `<div style="font-size:11px;color:var(--ct3);text-decoration:line-through">${fmt(p.old)}</div>` : ''}
+      </td>
+      <td>${stockBadge(p.stock)}</td>
+      <td>${p.stock === 0 ? statusBadge('cancelled') : statusBadge('active')}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm btn-icon" onclick="editProduct(${p.id})" title="Засах">✏️</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteProduct(${p.id})" title="Устгах">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('') || `<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--ct3)">Бараа олдсонгүй</td></tr>`;
+}
+
+function filterProducts(q) {
+  const query = typeof q === 'string' ? q.toLowerCase() : '';
+  const cat = document.getElementById('catFilter')?.value || '';
+  const stock = document.getElementById('stockFilter')?.value || '';
+  let r = products;
+  if (query) r = r.filter(p => p.name.toLowerCase().includes(query) || p.cat.toLowerCase().includes(query));
+  if (cat) r = r.filter(p => p.cat === cat);
+  if (stock === 'low') r = r.filter(p => p.stock > 0 && p.stock < 10);
+  if (stock === 'out') r = r.filter(p => p.stock === 0);
+  renderProducts(r);
+}
+
+function openAddProduct() {
+  openModal('Бараа нэмэх', `
+    <div class="form-grid form-grid-2">
+      <div class="fg full"><label>Барааны нэр</label><input type="text" id="np-name" placeholder="Барааны нэр..."></div>
+      <div class="fg"><label>Ангилал</label>
+        <select id="np-cat">${categories.map(c=>`<option value="${c.name}">${c.icon} ${c.name}</option>`).join('')}</select>
+      </div>
+      <div class="fg"><label>Тэмдэгт</label><input type="text" id="np-icon" placeholder="☕" value="☕"></div>
+      <div class="fg"><label>Үнэ (₮)</label><input type="number" id="np-price" placeholder="0"></div>
+      <div class="fg"><label>Эрт үнэ (₮)</label><input type="number" id="np-old" placeholder="0 (хоосон = хямдрал байхгүй)"></div>
+      <div class="fg"><label>Нөөц</label><input type="number" id="np-stock" placeholder="0"></div>
+      <div class="fg"><label>Тэмдэглэгээ</label>
+        <select id="np-badge"><option value="">Байхгүй</option><option value="HOT">HOT</option><option value="NEW">NEW</option><option value="SALE">SALE</option></select>
+      </div>
+      <div class="fg full"><label>Тайлбар</label><textarea id="np-desc" placeholder="Барааны тайлбар..."></textarea></div>
+    </div>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Болих</button>
+     <button class="btn btn-primary" onclick="addProduct()">Нэмэх</button>`
+  );
+}
+
+function addProduct() {
+  const name = document.getElementById('np-name').value.trim();
+  if (!name) { toast('Барааны нэр оруулна уу','err'); return; }
+  const price = parseInt(document.getElementById('np-price').value) || 0;
+  const old = parseInt(document.getElementById('np-old').value) || null;
+  const stock = parseInt(document.getElementById('np-stock').value) || 0;
+  products.push({
+    id: Date.now(),
+    name,
+    cat: document.getElementById('np-cat').value,
+    icon: document.getElementById('np-icon').value || '☕',
+    price, old, stock,
+    badge: document.getElementById('np-badge').value || null,
+    desc: document.getElementById('np-desc').value,
+    img: null
+  });
+  closeModal();
+  renderProducts();
+  toast('✅ Бараа нэмэгдлээ!','success');
+}
+
+function editProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  openModal('Бараа засах', `
+    <div class="form-grid form-grid-2">
+      <div class="fg full"><label>Барааны нэр</label><input type="text" id="ep-name" value="${p.name}"></div>
+      <div class="fg"><label>Ангилал</label>
+        <select id="ep-cat">${categories.map(c=>`<option value="${c.name}" ${c.name===p.cat?'selected':''}>${c.icon} ${c.name}</option>`).join('')}</select>
+      </div>
+      <div class="fg"><label>Тэмдэгт</label><input type="text" id="ep-icon" value="${p.icon}"></div>
+      <div class="fg"><label>Үнэ (₮)</label><input type="number" id="ep-price" value="${p.price}"></div>
+      <div class="fg"><label>Эрт үнэ (₮)</label><input type="number" id="ep-old" value="${p.old||''}"></div>
+      <div class="fg"><label>Нөөц</label><input type="number" id="ep-stock" value="${p.stock}"></div>
+      <div class="fg"><label>Тэмдэглэгээ</label>
+        <select id="ep-badge"><option value="">Байхгүй</option><option value="HOT" ${p.badge==='HOT'?'selected':''}>HOT</option><option value="NEW" ${p.badge==='NEW'?'selected':''}>NEW</option><option value="SALE" ${p.badge==='SALE'?'selected':''}>SALE</option></select>
+      </div>
+    </div>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Болих</button>
+     <button class="btn btn-primary" onclick="saveProduct(${id})">Хадгалах</button>`
+  );
+}
+
+async function saveProduct(id){
+
+ const p = products.find(x=>x.id===id);
+
+ if(!p) return;
+
+
+ const updateData={
+
+ name:document.getElementById('ep-name').value,
+
+ category:document.getElementById('ep-cat').value,
+
+ price:Number(document.getElementById('ep-price').value),
+
+ stock:Number(document.getElementById('ep-stock').value),
+
+ badge:document.getElementById('ep-badge').value
+
+ };
+
+
+ await sb
+ .from('products')
+ .update(updateData)
+ .eq('id',id);
+
+
+ await loadProducts();
+
+ closeModal();
+
+ toast('✅ Бараа шинэчлэгдлээ!','success');
+
+}
+
+function deleteProduct(id) {
+  openModal('Устгах', `<p style="color:var(--ct2);font-size:14px">Та энэ барааг устгахдаа итгэлтэй байна уу?<br>Энэ үйлдлийг буцаах боломжгүй.</p>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Болих</button>
+     <button class="btn btn-danger" onclick="confirmDeleteProduct(${id})">Устгах</button>`
+  );
+}
+async function confirmDeleteProduct(id){
+
+ await sb
+ .from('products')
+ .delete()
+ .eq('id',id);
+
+
+ await loadProducts();
+
+ closeModal();
+
+ toast('Бараа устгагдлаа','err');
+
+}
+
+// ──────────────────────────────────────────────
+// ORDERS
+// ──────────────────────────────────────────────
+function renderOrders(filter) {
+  currentOrderFilter = filter;
+  const data = filter === 'all' ? orders : orders.filter(o => o.status === filter);
+  const tb = document.getElementById('orderTable');
+  if (!tb) return;
+  tb.innerHTML = data.map(o => `
+    <tr>
+      <td><span style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--purple)">${o.id}</span></td>
+      <td>
+        <div style="font-weight:600;font-size:13px">${o.customer}</div>
+        <div style="font-size:11px;color:var(--ct3)">${o.phone}</div>
+      </td>
+      <td><div style="font-size:12px;color:var(--ct2);max-width:140px">${o.items.join(', ').length>40?o.items.join(', ').slice(0,40)+'…':o.items.join(', ')}</div></td>
+      <td style="font-weight:700;color:var(--purple)">${fmt(o.total)}</td>
+      <td style="font-size:12px;color:var(--ct2)">${o.delivery}</td>
+      <td style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace">${o.date}</td>
+      <td>${statusBadge(o.status)}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-outline btn-sm" onclick="viewOrder('${o.id}')">Харах</button>
+          <button class="btn btn-sm" style="background:var(--green-light);color:var(--green)" onclick="changeOrderStatus('${o.id}')">→</button>
+        </div>
+      </td>
+    </tr>`).join('') || `<tr><td colspan="8"><div style="text-align:center;padding:40px;color:var(--ct3)">Захиалга байхгүй</div></td></tr>`;
+}
+
+function filterOrders(filter, el) {
+  document.querySelectorAll('#orderTabs .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderOrders(filter);
+}
+
+function searchOrders(q) {
+  const data = q ? orders.filter(o => o.id.includes(q) || o.customer.toLowerCase().includes(q.toLowerCase())) : orders;
+  const filtered = currentOrderFilter === 'all' ? data : data.filter(o => o.status === currentOrderFilter);
+  // Re-render with filtered
+  const tb = document.getElementById('orderTable');
+  if (!tb) return;
+  tb.innerHTML = filtered.map(o => `
+    <tr>
+      <td><span style="font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--purple)">${o.id}</span></td>
+      <td><div style="font-weight:600">${o.customer}</div><div style="font-size:11px;color:var(--ct3)">${o.phone}</div></td>
+      <td><div style="font-size:12px;color:var(--ct2)">${o.items[0]}${o.items.length>1?' +':''}${o.items.length>1?o.items.length-1+' бусад':''}</div></td>
+      <td style="font-weight:700;color:var(--purple)">${fmt(o.total)}</td>
+      <td style="font-size:12px">${o.delivery}</td>
+      <td style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace">${o.date}</td>
+      <td>${statusBadge(o.status)}</td>
+      <td><button class="btn btn-outline btn-sm" onclick="viewOrder('${o.id}')">Харах</button></td>
+    </tr>`).join('');
+}
+
+function viewOrder(id) {
+  const o = orders.find(x => x.id === id);
+  if (!o) return;
+  openModal(`Захиалга ${o.id}`,
+    `<div style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:var(--cb);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:4px">ХЭРЭГЛЭГЧ</div><div style="font-weight:600">${o.customer}</div><div style="font-size:12px;color:var(--ct3)">${o.phone}</div></div>
+        <div style="background:var(--cb);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:4px">ХАЯГ</div><div style="font-size:13px;color:var(--ct2)">${o.addr}</div></div>
+        <div style="background:var(--cb);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:4px">НИЙТ ДҮН</div><div style="font-weight:700;font-size:18px;color:var(--purple)">${fmt(o.total)}</div></div>
+        <div style="background:var(--cb);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:4px">ТӨЛБӨР</div><div style="font-weight:600">${o.payment}</div><div style="font-size:12px;color:var(--ct3)">${o.delivery}</div></div>
+      </div>
+      <div><div style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace;margin-bottom:8px;letter-spacing:.5px">БАРААНУУД</div>
+        ${o.items.map(i=>`<div style="padding:8px 12px;background:var(--cb);border-radius:7px;font-size:13px;font-weight:500;margin-bottom:4px">📦 ${i}</div>`).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;color:var(--ct2)">Одоогийн төлөв:</span>
+        ${statusBadge(o.status)}
+      </div>
+    </div>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Хаах</button>
+     <button class="btn btn-primary" onclick="changeOrderStatus('${o.id}');closeModal()">Дараагийн төлөвт шилжүүлэх →</button>`
+  );
+}
+
+function changeOrderStatus(id) {
+  const o = orders.find(x => x.id === id);
+  if (!o) return;
+  const flow = ['pending','processing','shipped','done'];
+  const idx = flow.indexOf(o.status);
+  if (idx < flow.length - 1) { o.status = flow[idx + 1]; toast('Захиалгын төлөв шинэчлэгдлээ','success'); renderOrders(currentOrderFilter); }
+  else toast('Захиалга аль хэдийн дууссан байна','info');
+}
+
+// ──────────────────────────────────────────────
+// CATEGORIES
+// ──────────────────────────────────────────────
+function renderCategories() {
+  const tb = document.getElementById('categoryTable');
+  if (!tb) return;
+  tb.innerHTML = categories.map(c => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;background:var(--purple-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">${c.icon}</div>
+          <div>
+            <div style="font-weight:600">${c.name}</div>
+            <div style="font-size:11px;color:var(--ct3)">${c.desc}</div>
+          </div>
+        </div>
+      </td>
+      <td><span style="font-weight:600">${products.filter(p=>p.cat===c.name).length}</span><span style="color:var(--ct3);font-size:12px"> бараа</span></td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm btn-icon" onclick="toast('Засах функц удахгүй','info')">✏️</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="deleteCategory(${c.id})">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function addCategory() {
+  const name = document.getElementById('newCatName').value.trim();
+  if (!name) { toast('Ангилллын нэр оруулна уу','err'); return; }
+  categories.push({id:Date.now(), name, icon: document.getElementById('newCatIcon').value||'📦', desc: document.getElementById('newCatDesc').value});
+  document.getElementById('newCatName').value = '';
+  document.getElementById('newCatIcon').value = '';
+  document.getElementById('newCatDesc').value = '';
+  renderCategories();
+  toast('Ангилал нэмэгдлээ','success');
+}
+
+function deleteCategory(id) {
+  categories = categories.filter(c => c.id !== id);
+  renderCategories();
+  toast('Ангилал устгагдлаа','err');
+}
+
+function openAddCategory() { toast('Баруун талын маягтыг ашиглана уу','info'); }
+
+// ──────────────────────────────────────────────
+// INVENTORY
+// ──────────────────────────────────────────────
+function renderInventory() {
+  const ok = products.filter(p => p.stock >= 10).length;
+  const low = products.filter(p => p.stock > 0 && p.stock < 10).length;
+  const out = products.filter(p => p.stock === 0).length;
+  document.getElementById('inv-ok').textContent = ok;
+  document.getElementById('inv-low').textContent = low;
+  document.getElementById('inv-out').textContent = out;
+
+  const tb = document.getElementById('inventoryTable');
+  if (!tb) return;
+  tb.innerHTML = products.map(p => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:20px">${p.icon}</div>
+          <div style="font-size:13px;font-weight:600">${p.name}</div>
+        </div>
+      </td>
+      <td style="font-size:12px;color:var(--ct2)">${p.cat}</td>
+      <td style="font-weight:600">${fmt(p.price)}</td>
+      <td>${stockBadge(p.stock)}</td>
+      <td>${p.stock === 0 ? statusBadge('cancelled') : p.stock < 10 ? statusBadge('pending') : statusBadge('active')}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input type="number" id="add-stock-${p.id}" placeholder="+" style="width:70px;padding:5px 8px;border:1.5px solid var(--border);border-radius:7px;font-size:12px;outline:none">
+          <button class="btn btn-outline btn-sm" onclick="addStock(${p.id})">Нэмэх</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function addStock(id) {
+  const p = products.find(x => x.id === id);
+  const val = parseInt(document.getElementById('add-stock-' + id)?.value) || 0;
+  if (!val) { toast('Тоо хэмжээ оруулна уу','err'); return; }
+  p.stock += val;
+  renderInventory();
+  toast(`+${val} нөөц нэмэгдлээ ✅`,'success');
+}
+
+// ──────────────────────────────────────────────
+// CUSTOMERS
+// ──────────────────────────────────────────────
+function renderCustomers(list) {
+  const data = list || customers;
+  const tb = document.getElementById('customerTable');
+  const lbl = document.getElementById('custCountLabel');
+  if (lbl) lbl.textContent = `Нийт ${data.length} хэрэглэгч`;
+  if (!tb) return;
+  tb.innerHTML = data.map(c => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="avatar" style="background:var(--purple-light);color:var(--purple)">${c.name.charAt(0)}</div>
+          <div style="font-weight:600;font-size:13px">${c.name}</div>
+        </div>
+      </td>
+      <td style="font-size:12px;color:var(--ct2)">${c.email}</td>
+      <td style="font-weight:600;text-align:center">${c.orders}</td>
+      <td style="font-weight:700;color:var(--purple)">${fmt(c.spent)}</td>
+      <td style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace">${c.date}</td>
+      <td>${statusBadge(c.status)}</td>
+    </tr>`).join('');
+}
+
+function searchCustomers(q) {
+  const r = q ? customers.filter(c => c.name.toLowerCase().includes(q.toLowerCase()) || c.email.toLowerCase().includes(q.toLowerCase())) : customers;
+  renderCustomers(r);
+}
+
+// ──────────────────────────────────────────────
+// REVIEWS
+// ──────────────────────────────────────────────
+function renderReviews() {
+  const tb = document.getElementById('reviewTable');
+  if (!tb) return;
+  tb.innerHTML = reviews.map(r => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="avatar" style="background:var(--orange-light);color:var(--orange)">${r.user.charAt(0)}</div>
+          <span style="font-weight:600;font-size:13px">${r.user}</span>
+        </div>
+      </td>
+      <td style="font-size:12px;color:var(--ct2)">${r.product}</td>
+      <td><span style="color:#F59E0B;font-size:14px">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></td>
+      <td style="font-size:12px;color:var(--ct2);max-width:200px">${r.text}</td>
+      <td style="font-size:11px;color:var(--ct3);font-family:'Space Mono',monospace">${r.date}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-outline btn-sm">✅ Зөвшөөрөх</button>
+          <button class="btn btn-danger btn-sm">Устгах</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+// ──────────────────────────────────────────────
+// COUPONS
+// ──────────────────────────────────────────────
+function renderCoupons() {
+  const tb = document.getElementById('couponTable');
+  if (!tb) return;
+  tb.innerHTML = coupons.map(c => `
+    <tr>
+      <td><code style="background:var(--purple-light);color:var(--purple);padding:3px 10px;border-radius:6px;font-size:13px;font-weight:700">${c.code}</code></td>
+      <td style="font-weight:700;color:var(--purple)">${c.type === '%' ? c.value+'%' : fmt(c.value)}</td>
+      <td style="font-weight:600">${c.used}</td>
+      <td style="color:var(--ct2)">${c.limit || 'Хязгааргүй'}</td>
+      <td style="font-size:12px;color:var(--ct3);font-family:'Space Mono',monospace">${c.expires}</td>
+      <td>${statusBadge(c.status)}</td>
+      <td>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm" onclick="toast('${c.code} хуулагдлаа','success')">📋</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCoupon('${c.code}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`).join('');
+}
+
+function deleteCoupon(code) {
+  coupons = coupons.filter(c => c.code !== code);
+  renderCoupons();
+  toast('Купон устгагдлаа','err');
+}
+
+function openAddCoupon() {
+  openModal('Купон нэмэх', `
+    <div class="form-grid form-grid-2">
+      <div class="fg full"><label>Купоны код</label><input type="text" id="nc-code" placeholder="BREW15" style="text-transform:uppercase"></div>
+      <div class="fg"><label>Хөнгөлөлтийн төрөл</label><select id="nc-type"><option value="%">Хувиар (%)</option><option value="₮">Мөнгөн дүн (₮)</option></select></div>
+      <div class="fg"><label>Хэмжээ</label><input type="number" id="nc-value" placeholder="15"></div>
+      <div class="fg"><label>Хязгаар</label><input type="number" id="nc-limit" placeholder="Хязгааргүй бол хоосон"></div>
+      <div class="fg"><label>Дуусах огноо</label><input type="date" id="nc-expires"></div>
+    </div>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Болих</button>
+     <button class="btn btn-primary" onclick="addCoupon()">Нэмэх</button>`
+  );
+}
+
+function addCoupon() {
+  const code = document.getElementById('nc-code').value.trim().toUpperCase();
+  if (!code) { toast('Купоны код оруулна уу','err'); return; }
+  coupons.push({
+    code, type: document.getElementById('nc-type').value,
+    value: parseInt(document.getElementById('nc-value').value)||0,
+    used: 0, limit: parseInt(document.getElementById('nc-limit').value)||null,
+    expires: document.getElementById('nc-expires').value || '2026-12-31',
+    status: 'active'
+  });
+  closeModal();
+  renderCoupons();
+  toast('Купон нэмэгдлээ ✅','success');
+}
+
+// ──────────────────────────────────────────────
+// BANNERS
+// ──────────────────────────────────────────────
+function renderBanners() {
+  const bl = document.getElementById('bannerList');
+  if (!bl) return;
+  const banners = [
+    {title:'Bevercity Melon Smoothie ирлээ',sub:'Тропик амтат smoothie base',color:'var(--cr)',active:true},
+    {title:'Хаврын хямдрал — 20% OFF',sub:'COFFEE20 кодоор',color:'var(--purple)',active:true},
+    {title:'Шинэ ирэлт: Colombia Huila',sub:'Dark roast, fruity notes',color:'var(--green)',active:false},
+  ];
+  bl.innerHTML = banners.map((b,i) => `
+    <div style="border-radius:10px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border)">
+      <div style="background:${b.color};padding:16px 20px;color:#fff">
+        <div style="font-weight:700;font-size:14px">${b.title}</div>
+        <div style="font-size:12px;opacity:.75;margin-top:3px">${b.sub}</div>
+      </div>
+      <div style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;background:var(--cw)">
+        ${statusBadge(b.active?'active':'inactive')}
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline btn-sm" onclick="toast('Баннер ${i+1} засагдлаа','success')">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="toast('Баннер устгагдлаа','err')">🗑️</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+renderDashboard();
+</script>
+</body>
+</html>
