@@ -1278,7 +1278,7 @@ function renderHome() {
   if (!P.length) return; // Ачааллаагүй бол skip
 
   if (f) {
-    const featured = P.filter(p => p.badge === 'HOT').slice(0, 8);
+    const featured = P.slice(0,8);
     f.innerHTML = featured.length
       ? `<div class="product-grid">${featured.map(pCard).join('')}</div>`
       : '<p style="color:var(--ct3);padding:20px;font-size:14px">Бараа байхгүй байна</p>';
